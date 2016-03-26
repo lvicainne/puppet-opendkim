@@ -88,8 +88,26 @@ configuration file.
 
 #### Attributes
 
+<<<<<<< HEAD
 ##### `keys`
 ##### `socket`
+=======
+##### `configdir`
+##### `configfile`
+##### `keys`
+##### `gid`
+##### `group`
+##### `uid`
+##### `user`
+##### `log_why`
+##### `package_name`
+##### `service_ensure`
+##### `service_enable`
+##### `service_name`
+##### `socket`
+##### `subdomains`
+##### `sysconfigfile`
+>>>>>>> fc45c7d875a657315cce7244df04dff5a888c628
 ##### `trusted_hosts`
 
 ## Limitations
