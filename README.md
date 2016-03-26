@@ -88,10 +88,6 @@ configuration file.
 
 #### Attributes
 
-<<<<<<< HEAD
-##### `keys`
-##### `socket`
-=======
 ##### `configdir`
 ##### `configfile`
 ##### `keys`
@@ -107,7 +103,6 @@ configuration file.
 ##### `socket`
 ##### `subdomains`
 ##### `sysconfigfile`
->>>>>>> fc45c7d875a657315cce7244df04dff5a888c628
 ##### `trusted_hosts`
 
 ## Limitations
