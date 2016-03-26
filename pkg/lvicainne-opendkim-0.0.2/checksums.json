@@ -1,0 +1,17 @@
+{
+  "LICENSE": "b4ee16e078ee8d08fdb115aa4e16254b",
+  "MegaSAS.log": "99aad3b5d910fa3808fcdceefdd0b0ef",
+  "Rakefile": "eaf455529822b5954530242bdb54e8f0",
+  "manifests/config.pp": "85699ff365b642a9045146cd94673076",
+  "manifests/init.pp": "2a92b101b16dbd379725ec2002abed63",
+  "manifests/install.pp": "7a85468352f56c237713cf80e2ab0a60",
+  "manifests/params.pp": "f24e472fe7c20b647f9f830ffa55789a",
+  "manifests/service.pp": "73b285386c9d75f3574213a39bd9a49d",
+  "metadata.json": "2d03fdf05b790fa6999aa8efc2ec99e6",
+  "templates/etc/KeyTable.erb": "003f8f6da28671079add1082a647d135",
+  "templates/etc/SigningTable.erb": "5fb3df1d8ca0b8dd7d1acd818f4329aa",
+  "templates/etc/TrustedHosts.erb": "d3816211b999bbc4a591effaf6ac7049",
+  "templates/etc/opendkim.conf.erb": "91998e5a97585c28f03508f4969d6058",
+  "templates/public-rsa-key.erb": "a2564eedd34e9593248d894354b9c806",
+  "templates/sysconfig/opendkim.erb": "803c775a8219b5f2bc2e353dcfa2bb98"
+}

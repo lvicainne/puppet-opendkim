@@ -1,0 +1,6 @@
+# THIS FILE IS MANAGED BY PUPPET
+# <%= file %>
+
+<% @keys.each do |mykey| -%>
+<%= mykey['selector'] %>._domainkey.<%= mykey['domain'] %> <%= mykey['domain'] %>:<%= mykey['selector'] %>:<%= @configdir %>/keys/<%= mykey['domain'] %>/<%= mykey['selector'] %>
+<% end -%>

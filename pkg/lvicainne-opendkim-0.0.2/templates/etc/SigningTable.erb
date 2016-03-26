@@ -1,0 +1,8 @@
+# THIS FILE IS MANAGED BY PUPPET
+# <%= file %>
+
+<% @keys.each do |mykey| -%>
+<% mykey['signingdomains'].each do |signingdomain| -%>
+<%= signingdomain %> <%= mykey['selector'] %>._domainkey.<%= mykey['domain'] %>
+<% end -%>
+<% end -%>
