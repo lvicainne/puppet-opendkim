@@ -95,7 +95,6 @@ class opendkim::config inherits opendkim {
   $opendkim::keys.each |Hash $key| {
     file { "${opendkim::configdir}/keys/${key['domain']}":
         ensure  => 'directory',
-        #content => $key['privatekey'],
         recurse => true,
         owner   => $opendkim::user,
         group   => $opendkim::group,
