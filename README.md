@@ -1,5 +1,7 @@
 # OpenDKIM
 
+[![Build Status](https://travis-ci.org/lvicainne/lvicainne-opendkim.svg?branch=master)](https://travis-ci.org/lvicainne/lvicainne-opendkim)
+
 #### Table of Contents
 
 1. [Description](#description)
