@@ -3,10 +3,10 @@
 #### Table of Contents
 
 1. [Description](#description)
-2. [Setup - The basics of getting started with [modulename]](#setup)
-    * [What [modulename] affects](#what-[modulename]-affects)
+2. [Setup - The basics of getting started with OpenDKIM](#setup)
+    * [What opendkim module affects](#what-opendkim-module-affects)
     * [Setup requirements](#setup-requirements)
-    * [Beginning with [modulename]](#beginning-with-[modulename])
+    * [Beginning with opendkim](#beginning-with-opendkim)
 3. [Usage - Configuration options and additional functionality](#usage)
 4. [Reference - An under-the-hood peek at what the module is doing and how](#reference)
 5. [Limitations - OS compatibility, etc.](#limitations)
@@ -115,7 +115,7 @@ You are pleased to fork this module and adapt it for you needs. I am open to any
 
 ## Release Notes/Contributors/Etc. 
 
-v0.0.3 Improve some documentation parts
-v0.0.2 Improve some documentation parts
-v0.0.1 First Running version
+* v0.0.3 Improve some documentation parts
+* v0.0.2 Improve some documentation parts
+* v0.0.1 First Running version
 
