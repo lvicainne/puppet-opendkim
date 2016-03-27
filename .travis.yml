@@ -10,9 +10,9 @@ branches:
   only:
     - master
 env:
+  - PUPPET_GEM_VERSION="~> 4.4.0"
   - PUPPET_GEM_VERSION="~> 4.2.0"
-  - PUPPET_GEM_VERSION="~> 3.8.0"
-  - PUPPET_GEM_VERSION="~> 2.7.16"
+  - PUPPET_GEM_VERSION="~> 4.0.0"
 notifications:
   email: false
 gemfile: .gemfile
