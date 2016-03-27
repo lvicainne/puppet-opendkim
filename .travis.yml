@@ -1,19 +1,22 @@
+sudo: false
 language: ruby
+cache: bundler
 rvm:
   - 1.9.3
   - 2.3.0
 script: 
+  - "rake lint"
   - "rake spec"
   - "rake validate"
 branches:
   only:
     - master
 env:
-  - PUPPET_VERSION=4.2.0
-  - PUPPET_VERSION=3.8.0
-  - PUPPET_VERSION=2.7.17
-  - PUPPET_VERSION=2.7.9
-  - PUPPET_VERSION=2.6.9
+  - PUPPET_GEM_VERSION="~> 4.2.0"
+  - PUPPET_GEM_VERSION="~> 3.8.0"
+  - PUPPET_GEM_VERSION="~> 2.7.17"
+  - PUPPET_GEM_VERSION="~> 2.7.9"
+  - PUPPET_GEM_VERSION="~> 2.6.9"
 notifications:
   email: false
 gemfile: .gemfile
