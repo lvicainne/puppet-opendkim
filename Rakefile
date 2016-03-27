@@ -25,10 +25,5 @@ RSpec::Core::RakeTask.new(:acceptance) do |t|
   t.pattern = 'spec/acceptance'
 end
 
-desc 'Run metadata_lint, lint, syntax, and spec tests.'
-task test: [
-  :metadata_lint,
-  :lint,
-  :syntax,
-  :spec,
-]
+task :default => [:clean, :validate, :lint, :spec]
+
