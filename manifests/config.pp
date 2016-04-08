@@ -102,7 +102,7 @@ class opendkim::config inherits opendkim {
     }
 
 
-    file { "${opendkim::configdir}/keys/${key['domain']}/default":
+    file { "${opendkim::configdir}/keys/${key['domain']}/${key['selector']}":
         ensure  => 'file',
         content => $key['privatekey'],
         owner   => $opendkim::user,
@@ -114,7 +114,7 @@ class opendkim::config inherits opendkim {
     $domain = $key['domain']
     $publickey = $key['publickey']
     
-    file { "${opendkim::configdir}/keys/${key['domain']}/default.txt":
+    file { "${opendkim::configdir}/keys/${key['domain']}/${key['selector']}.txt":
         ensure  => 'file',
         content => template('opendkim/public-rsa-key.erb'),
         owner   => $opendkim::user,
