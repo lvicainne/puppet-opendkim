@@ -1,5 +1,5 @@
 class opendkim::config inherits opendkim {
-  
+ 
   group { 'opendkim':
     ensure => 'present',
     name   => $opendkim::group,
@@ -113,7 +113,7 @@ class opendkim::config inherits opendkim {
     $selector = $key['selector']
     $domain = $key['domain']
     $publickey = $key['publickey']
-    
+ 
     file { "${opendkim::configdir}/keys/${key['domain']}/${key['selector']}.txt":
         ensure  => 'file',
         content => template('opendkim/public-rsa-key.erb'),
@@ -123,5 +123,5 @@ class opendkim::config inherits opendkim {
     }
 
   }
-  
+ 
 }

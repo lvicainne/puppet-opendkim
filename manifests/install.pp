@@ -4,5 +4,5 @@ class opendkim::install inherits opendkim {
     ensure => installed,
     name   => $::opendkim::package_name,
   }
-  
+
 }

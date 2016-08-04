@@ -7,7 +7,7 @@ class opendkim::params {
   $configfile  = '/etc/opendkim.conf'
 
   $package_name = 'opendkim'
-  
+
   $log_why = 'no'
   $subdomains = 'yes'
   $socket = 'inet:8891@127.0.0.1'
@@ -20,11 +20,11 @@ class opendkim::params {
     privatekey => undef,
     signingdomains => ['']
   }
-  
+ 
   $service_enable    = true
   $service_ensure    = 'running'
   $service_name      = 'opendkim'
-  
+ 
   case $::osfamily {
       'Debian': {
           $sysconfigfile    = '/etc/default/opendkim'
