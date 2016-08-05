@@ -20,11 +20,11 @@ class opendkim::params {
     privatekey => undef,
     signingdomains => ['']
   }
- 
+  
   $service_enable    = true
   $service_ensure    = 'running'
   $service_name      = 'opendkim'
- 
+  
   case $::osfamily {
       'Debian': {
           $sysconfigfile    = '/etc/default/opendkim'

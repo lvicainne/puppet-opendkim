@@ -3,13 +3,13 @@ class opendkim (
   $group                = $opendkim::params::group,
   $uid                  = $opendkim::params::uid,
   $gid                  = $opendkim::params::gid,
- 
+  
   $configdir            = $opendkim::params::configdir,
   $configfile           = $opendkim::params::configfile,
   $sysconfigfile        = $opendkim::params::sysconfigfile,
 
   $package_name         = $opendkim::params::package_name,
- 
+  
   $log_why              = $opendkim::params::log_why,
   $subdomains           = $opendkim::params::subdomains,
   $socket               = $opendkim::params::socket,
