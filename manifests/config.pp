@@ -5,6 +5,11 @@ class opendkim::config inherits opendkim {
     name   => $opendkim::group,
     gid    => $opendkim::gid,
   }
+  
+  $shelluser = $::osfamily ? {
+    'RedHat' => '/sbin/nologin',
+    default  => '/usr/sbin/nologin',
+  }
 
   user { 'opendkim':
     ensure   => 'present',
@@ -12,10 +17,7 @@ class opendkim::config inherits opendkim {
     gid      => $opendkim::gid,
     home     => $opendkim::configdir,
     password => '!!',
-    shell    => $::osfamily ? {
-        'RedHat' => '/sbin/nologin',
-        default  => '/usr/sbin/nologin',
-    },
+    shell    => $shelluser,
     uid      => $opendkim::uid,
   }
 
