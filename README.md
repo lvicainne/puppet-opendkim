@@ -1,6 +1,6 @@
 # OpenDKIM
 
-[![Build Status](https://travis-ci.org/lvicainne/lvicainne-opendkim.svg?branch=master)](https://travis-ci.org/lvicainne/lvicainne-opendkim)
+[![Build Status](https://travis-ci.org/lvicainne/lvicainne-opendkim.svg?branch=master)](https://travis-ci.org/lvicainne/puppet-opendkim)
 
 #### Table of Contents
 
@@ -128,6 +128,7 @@ You are pleased to fork this module and adapt it for you needs. I am open to any
 
 ## Release Notes/Contributors/Etc. 
 
+* v0.0.7 Rename repository
 * v0.0.6 Support Umask variabilization in order to use UNIX sockets
 * v0.0.5 Add the homedir parameter
 * v0.0.4 Ensure the pidfile directory exists
