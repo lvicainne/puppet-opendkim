@@ -1,6 +1,6 @@
 # OpenDKIM
 
-[![Build Status](https://travis-ci.org/lvicainne/lvicainne-opendkim.svg?branch=master)](https://travis-ci.org/lvicainne/puppet-opendkim)
+[![Build Status](https://travis-ci.org/lvicainne/puppet-opendkim.svg?branch=master)](https://travis-ci.org/lvicainne/puppet-opendkim)
 
 #### Table of Contents
 
