@@ -15,7 +15,7 @@
 #SOCKET="inet:12345@192.0.2.1" # listen on 192.0.2.1 on port 12345
 
 # Set the necessary startup options
-#OPTIONS="-x <%= @configfile %> -P /var/run/opendkim/opendkim.pid"
+#OPTIONS="-x <%= @configfile %> -P <%= @pidfile %>"
 
 # Set the default DKIM key location
 DKIM_KEYDIR=<%= @configdir %>/keys

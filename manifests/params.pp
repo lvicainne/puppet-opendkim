@@ -5,12 +5,15 @@ class opendkim::params {
   $gid = 5010
 
   $configfile  = '/etc/opendkim.conf'
+  $pidfile = '/var/run/opendkim/opendkim.pid'
+  $homedir = '/var/run/opendkim'
 
   $package_name = 'opendkim'
 
   $log_why = 'no'
   $subdomains = 'yes'
   $socket = 'inet:8891@127.0.0.1'
+  $umask = '0022'
   $trusted_hosts = ['::1', '127.0.0.1', 'localhost']
 
   $keys = {

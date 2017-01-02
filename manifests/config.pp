@@ -15,7 +15,7 @@ class opendkim::config inherits opendkim {
     ensure   => 'present',
     name     => $opendkim::user,
     gid      => $opendkim::gid,
-    home     => $opendkim::configdir,
+    home     => $opendkim::homedir,
     password => '!!',
     shell    => $shelluser,
     uid      => $opendkim::uid,
@@ -29,11 +29,28 @@ class opendkim::config inherits opendkim {
     content => template('opendkim/sysconfig/opendkim.erb'),
   }
 
+  $piddir = dirname($pidfile )
+  file { $piddir:
+    ensure  => 'directory',
+    owner  => $opendkim::user,
+    group  => $opendkim::group,
+    mode    => '0755',
+  }
+
   file { "${opendkim::configdir}/keys":
     ensure => 'directory',
     owner  => $opendkim::user,
     group  => $opendkim::group,
     mode   => '0640',
+  }
+
+  if !defined(File[$opendkim::homedir]) {
+	file { $opendkim::homedir:
+	  ensure  => 'directory',
+	  owner   => $opendkim::user,
+	  group   => $opendkim::group,
+	  mode    => '0755',
+	}
   }
 
   file { $opendkim::configdir:

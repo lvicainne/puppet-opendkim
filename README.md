@@ -77,6 +77,15 @@ opendkim::keys:
           - '*@subdomain.mydomain.com'
 ```
 
+If you want to use OpenDKIM though a UNIX socket with postfix for example, 
+you shoulf configure the socket like this :
+
+
+```yaml
+opendkim::socket: 'local:/var/run/opendkim/opendkim.sock'
+opendkim::umask: '0111'
+```
+
 ## Reference
 
 ### Public Classes
@@ -117,6 +126,9 @@ You are pleased to fork this module and adapt it for you needs. I am open to any
 
 ## Release Notes/Contributors/Etc. 
 
+* v0.0.6 Support Umask variabilization in order to use UNIX sockets
+* v0.0.5 Add the homedir parameter
+* v0.0.4 Ensure the pidfile directory exists
 * v0.0.3 Improve some documentation parts
 * v0.0.2 Improve some documentation parts
 * v0.0.1 First Running version

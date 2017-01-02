@@ -3,9 +3,11 @@ class opendkim (
   $group                = $opendkim::params::group,
   $uid                  = $opendkim::params::uid,
   $gid                  = $opendkim::params::gid,
-  
+
+  $homedir              = $opendkim::params::homedir,
   $configdir            = $opendkim::params::configdir,
   $configfile           = $opendkim::params::configfile,
+  $pidfile              = $opendkim::params::pidfile,
   $sysconfigfile        = $opendkim::params::sysconfigfile,
 
   $package_name         = $opendkim::params::package_name,
@@ -13,6 +15,7 @@ class opendkim (
   $log_why              = $opendkim::params::log_why,
   $subdomains           = $opendkim::params::subdomains,
   $socket               = $opendkim::params::socket,
+  $umask                = $opendkim::params::umask,
   $trusted_hosts        = $opendkim::params::trusted_hosts,
 
   $keys                 = $opendkim::params::keys,
@@ -28,8 +31,10 @@ class opendkim (
   validate_integer($uid)
   validate_integer($gid)
 
+  validate_absolute_path($homedir)
   validate_absolute_path($configdir)
   validate_absolute_path($configfile)
+  validate_absolute_path($pidfile)
   validate_absolute_path($sysconfigfile)
 
   validate_string($package_name)
