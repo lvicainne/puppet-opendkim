@@ -78,7 +78,7 @@ opendkim::keys:
 ```
 
 If you want to use OpenDKIM though a UNIX socket with postfix for example, 
-you shoulf configure the socket like this :
+you should configure the socket like this :
 
 
 ```yaml
@@ -104,7 +104,9 @@ configuration file.
 ##### `keys`
 ##### `gid`
 ##### `group`
+##### `homedir`
 ##### `uid`
+##### `umask`
 ##### `user`
 ##### `log_why`
 ##### `package_name`
