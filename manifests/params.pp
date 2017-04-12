@@ -16,13 +16,7 @@ class opendkim::params {
   $umask = '0022'
   $trusted_hosts = ['::1', '127.0.0.1', 'localhost']
 
-  $keys = {
-    domain => undef,
-    selector => undef,
-    publickey => undef,
-    privatekey => undef,
-    signingdomains => ['']
-  }
+  $keys = []
   
   $service_enable    = true
   $service_ensure    = 'running'
