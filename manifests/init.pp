@@ -40,6 +40,7 @@ class opendkim(
 ) inherits opendkim::params {
 
   anchor { 'opendkim::begin': }
+  -> class { '::opendkim::user': }
   -> class { '::opendkim::install': }
   -> class { '::opendkim::config': }
   ~> class { '::opendkim::service': }
