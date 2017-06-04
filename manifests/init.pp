@@ -3,33 +3,31 @@
 #This class manages the opendkim service.
 #
 #Please see the README.md
-class opendkim (
-  $user                 = $opendkim::params::user,
-  $group                = $opendkim::params::group,
-  $uid                  = $opendkim::params::uid,
-  $gid                  = $opendkim::params::gid,
+class opendkim(
+  $user               = $opendkim::params::user,
+  $group              = $opendkim::params::group,
+  $uid                = $opendkim::params::uid,
+  $gid                = $opendkim::params::gid,
 
-  $homedir              = $opendkim::params::homedir,
-  $configdir            = $opendkim::params::configdir,
-  $configfile           = $opendkim::params::configfile,
-  $pidfile              = $opendkim::params::pidfile,
-  $sysconfigfile        = $opendkim::params::sysconfigfile,
+  $homedir            = $opendkim::params::homedir,
+  $configdir          = $opendkim::params::configdir,
+  $configfile         = $opendkim::params::configfile,
+  $pidfile            = $opendkim::params::pidfile,
+  $sysconfigfile      = $opendkim::params::sysconfigfile,
+  $package_name       = $opendkim::params::package_name,
+  $log_why            = $opendkim::params::log_why,
+  $subdomains         = $opendkim::params::subdomains,
+  $socket             = $opendkim::params::socket,
+  $umask              = $opendkim::params::umask,
+  $trusted_hosts      = $opendkim::params::trusted_hosts,
 
-  $package_name         = $opendkim::params::package_name,
- 
-  $log_why              = $opendkim::params::log_why,
-  $subdomains           = $opendkim::params::subdomains,
-  $socket               = $opendkim::params::socket,
-  $umask                = $opendkim::params::umask,
-  $trusted_hosts        = $opendkim::params::trusted_hosts,
+  $keys               = $opendkim::params::keys,
 
-  $keys                 = $opendkim::params::keys,
+  $service_ensure     = $opendkim::params::service_ensure,
+  $service_enable     = $opendkim::params::service_enable,
+  $service_name       = $opendkim::params::service_name,
 
-  $service_ensure       = $opendkim::params::service_ensure,
-  $service_enable       = $opendkim::params::service_enable,
-  $service_name         = $opendkim::params::service_name,
-
-  ) inherits opendkim::params {
+  )inherits opendkim::params {
 
   validate_string($user)
   validate_string($group)
@@ -60,4 +58,5 @@ class opendkim (
   -> class { '::opendkim::config': }
   ~> class { '::opendkim::service': }
   -> anchor { 'opendkim::end': }
+
 }
