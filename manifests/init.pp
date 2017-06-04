@@ -1,3 +1,8 @@
+# == Class: opendkim
+#
+#This class manages the opendkim service.
+#
+#Please see the README.md
 class opendkim (
   $user                 = $opendkim::params::user,
   $group                = $opendkim::params::group,
@@ -11,7 +16,7 @@ class opendkim (
   $sysconfigfile        = $opendkim::params::sysconfigfile,
 
   $package_name         = $opendkim::params::package_name,
-  
+ 
   $log_why              = $opendkim::params::log_why,
   $subdomains           = $opendkim::params::subdomains,
   $socket               = $opendkim::params::socket,
