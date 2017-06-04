@@ -17,22 +17,22 @@ class opendkim::params {
   $trusted_hosts = ['::1', '127.0.0.1', 'localhost']
 
   $keys = []
-  
+
   $service_enable    = true
   $service_ensure    = 'running'
   $service_name      = 'opendkim'
-  
+
   case $::osfamily {
-      'Debian': {
-          $sysconfigfile    = '/etc/default/opendkim'
-          $configdir        = '/etc/opendkim'
-      }
-      'Redhat': {
-          $sysconfigfile   = '/etc/sysconfig/opendkim'
-          $configdir        = '/etc/dkim'
-      }
-      default: {
-          fail("${::operatingsystem} is not supported by this module.")
-      }
+    'Debian': {
+      $sysconfigfile    = '/etc/default/opendkim'
+      $configdir        = '/etc/opendkim'
+    }
+    'Redhat': {
+      $sysconfigfile    = '/etc/sysconfig/opendkim'
+      $configdir        = '/etc/dkim'
+    }
+    default: {
+      fail("${::operatingsystem} is not supported by this module.")
+    }
   }
 }

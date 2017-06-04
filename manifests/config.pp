@@ -1,11 +1,11 @@
 class opendkim::config inherits opendkim {
-  
+
   group { 'opendkim':
     ensure => 'present',
     name   => $opendkim::group,
     gid    => $opendkim::gid,
   }
-  
+
   $shelluser = $::osfamily ? {
     'RedHat' => '/sbin/nologin',
     default  => '/usr/sbin/nologin',
@@ -113,34 +113,34 @@ class opendkim::config inherits opendkim {
 
   $opendkim::keys.each |Hash $key| {
     file { "${opendkim::configdir}/keys/${key['domain']}":
-        ensure  => 'directory',
-        recurse => true,
-        owner   => $opendkim::user,
-        group   => $opendkim::group,
-        mode    => '0600',
+      ensure  => 'directory',
+      recurse => true,
+      owner   => $opendkim::user,
+      group   => $opendkim::group,
+      mode    => '0600',
     }
 
 
     file { "${opendkim::configdir}/keys/${key['domain']}/${key['selector']}":
-        ensure  => 'file',
-        content => $key['privatekey'],
-        owner   => $opendkim::user,
-        group   => $opendkim::group,
-        mode    => '0600',
+      ensure  => 'file',
+      content => $key['privatekey'],
+      owner   => $opendkim::user,
+      group   => $opendkim::group,
+      mode    => '0600',
     }
 
     $selector = $key['selector']
     $domain = $key['domain']
     $publickey = $key['publickey']
-    
+
     file { "${opendkim::configdir}/keys/${key['domain']}/${key['selector']}.txt":
-        ensure  => 'file',
-        content => template('opendkim/public-rsa-key.erb'),
-        owner   => $opendkim::user,
-        group   => $opendkim::group,
-        mode    => '0600',
+      ensure  => 'file',
+      content => template('opendkim/public-rsa-key.erb'),
+      owner   => $opendkim::user,
+      group   => $opendkim::group,
+      mode    => '0600',
     }
 
   }
-  
+
 }
