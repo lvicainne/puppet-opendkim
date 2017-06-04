@@ -12,7 +12,7 @@ PuppetLint.configuration.send('disable_documentation')
 PuppetLint.configuration.send('disable_single_quote_string_with_variables')
 PuppetLint.configuration.send('disable_selector_inside_resource')
 PuppetLint.configuration.send('disable_trailing_whitespace')
-PuppetLint.configuration.send('disable_variable_scope')
+#PuppetLint.configuration.send('disable_variable_scope')
 
 exclude_paths = %w(
   pkg/**/*
