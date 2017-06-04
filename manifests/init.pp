@@ -50,9 +50,9 @@ class opendkim (
   validate_bool($service_enable)
   validate_string($service_name)
 
-  anchor { 'opendkim::begin': } ->
-  class { '::opendkim::install': } ->
-  class { '::opendkim::config': } ~>
-  class { '::opendkim::service': } ->
-  anchor { 'opendkim::end': }
+  anchor { 'opendkim::begin': }
+  -> class { '::opendkim::install': }
+  -> class { '::opendkim::config': }
+  ~> class { '::opendkim::service': }
+  -> anchor { 'opendkim::end': }
 }

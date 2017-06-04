@@ -3,12 +3,14 @@ require 'puppet-lint/tasks/puppet-lint'
 require 'puppet-syntax/tasks/puppet-syntax'
 require 'puppetlabs_spec_helper/rake_tasks'
 
-PuppetLint.configuration.log_format = '%{path}:%{linenumber}:%{check}:%{KIND}:%{message}'
-PuppetLint.configuration.fail_on_warnings = true
+#PuppetLint.configuration.log_format = '%{path}:%{linenumber}:%{check}:%{KIND}:%{message}'
+#PuppetLint.configuration.fail_on_warnings = true
 PuppetLint.configuration.send('relative')
+PuppetLint.configuration.send('disable_80chars')
 PuppetLint.configuration.send('disable_class_inherits_from_params_class')
 PuppetLint.configuration.send('disable_documentation')
 PuppetLint.configuration.send('disable_single_quote_string_with_variables')
+PuppetLint.configuration.send('disable_selector_inside_resource')
 PuppetLint.configuration.send('disable_trailing_whitespace')
 PuppetLint.configuration.send('disable_variable_scope')
 
