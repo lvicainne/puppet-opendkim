@@ -4,54 +4,35 @@
 #
 #Please see the README.md
 class opendkim(
-  $user               = $opendkim::params::user,
-  $group              = $opendkim::params::group,
-  $uid                = $opendkim::params::uid,
-  $gid                = $opendkim::params::gid,
+  String                    $user               = $opendkim::params::user,
+  String                    $group              = $opendkim::params::group,
+  Integer                   $uid                = $opendkim::params::uid,
+  Integer                   $gid                = $opendkim::params::gid,
 
-  $homedir            = $opendkim::params::homedir,
-  $configdir          = $opendkim::params::configdir,
-  $configfile         = $opendkim::params::configfile,
-  $pidfile            = $opendkim::params::pidfile,
-  $sysconfigfile      = $opendkim::params::sysconfigfile,
-  $package_name       = $opendkim::params::package_name,
-  $log_why            = $opendkim::params::log_why,
-  $subdomains         = $opendkim::params::subdomains,
-  $socket             = $opendkim::params::socket,
-  $umask              = $opendkim::params::umask,
-  $trusted_hosts      = $opendkim::params::trusted_hosts,
+  Stdlib::Absolutepath      $homedir            = $opendkim::params::homedir,
+  Stdlib::Absolutepath      $configdir          = $opendkim::params::configdir,
+  Stdlib::Absolutepath      $configfile         = $opendkim::params::configfile,
+  Stdlib::Absolutepath      $pidfile            = $opendkim::params::pidfile,
+  Stdlib::Absolutepath      $sysconfigfile      = $opendkim::params::sysconfigfile,
+  String                    $package_name       = $opendkim::params::package_name,
+  String                    $log_why            = $opendkim::params::log_why,
+  String                    $subdomains         = $opendkim::params::subdomains,
+  String                    $socket             = $opendkim::params::socket,
+  String                    $umask              = $opendkim::params::umask,
+  Array[String]             $trusted_hosts      = $opendkim::params::trusted_hosts,
 
-  $keys               = $opendkim::params::keys,
+  Array[Struct[{
+    domain         => String,
+    selector       => String,
+    publickey      => String,
+    privatekey     => String,
+    signingdomains => Array[String],
+  }]]                       $keys               = $opendkim::params::keys,
 
-  $service_ensure     = $opendkim::params::service_ensure,
-  $service_enable     = $opendkim::params::service_enable,
-  $service_name       = $opendkim::params::service_name,
-
-  )inherits opendkim::params {
-
-  validate_string($user)
-  validate_string($group)
-  validate_integer($uid)
-  validate_integer($gid)
-
-  validate_absolute_path($homedir)
-  validate_absolute_path($configdir)
-  validate_absolute_path($configfile)
-  validate_absolute_path($pidfile)
-  validate_absolute_path($sysconfigfile)
-
-  validate_string($package_name)
-
-  validate_string($log_why)
-  validate_string($subdomains)
-  validate_string($socket)
-  validate_array($trusted_hosts)
-
-  validate_array($keys)
-
-  validate_string($service_ensure)
-  validate_bool($service_enable)
-  validate_string($service_name)
+  Enum['running','stopped'] $service_ensure     = $opendkim::params::service_ensure,
+  Boolean                   $service_enable     = $opendkim::params::service_enable,
+  String                    $service_name       = $opendkim::params::service_name,
+) inherits opendkim::params {
 
   anchor { 'opendkim::begin': }
   -> class { '::opendkim::install': }
