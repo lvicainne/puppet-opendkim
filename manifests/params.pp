@@ -17,6 +17,7 @@ class opendkim::params {
   $trusted_hosts = ['::1', '127.0.0.1', 'localhost']
 
   $keys = []
+  $nameservers       = undef
 
   $service_enable    = true
   $service_ensure    = 'running'
