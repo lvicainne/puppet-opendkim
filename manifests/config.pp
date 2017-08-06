@@ -1,3 +1,4 @@
+# Class opendkim::config
 class opendkim::config inherits opendkim {
 
   group { 'opendkim':
@@ -65,12 +66,14 @@ class opendkim::config inherits opendkim {
   if($opendkim::configdir != '/etc/opendkim') {
     file { '/etc/opendkim':
       ensure => 'absent',
+      force  => true,
     }
   }
 
   if($opendkim::configdir != '/etc/dkim') {
     file { '/etc/dkim':
       ensure => 'absent',
+      force  => true,
     }
   }
 
