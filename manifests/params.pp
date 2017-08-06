@@ -30,7 +30,7 @@ class opendkim::params {
     }
     'Redhat': {
       $sysconfigfile    = '/etc/sysconfig/opendkim'
-      $configdir        = '/etc/dkim'
+      $configdir        = '/etc/opendkim'
     }
     default: {
       fail("${::operatingsystem} is not supported by this module.")

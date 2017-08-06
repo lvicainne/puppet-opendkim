@@ -131,6 +131,7 @@ You are pleased to fork this module and adapt it for you needs. I am open to any
 
 ### v0.2 - Compatible with Puppetfrom 4.8 to newer
 
+* v0.2.4 Correction of the default directory for CentOs : from /etc/dkim to /etc/opendkim 
 * v0.2.3 Minor changes and corrections about empty values
 
 ### v0.1 - Compatible with Puppet up to 4.6
