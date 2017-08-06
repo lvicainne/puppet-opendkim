@@ -19,7 +19,7 @@ class opendkim(
   String                    $subdomains         = $opendkim::params::subdomains,
   String                    $socket             = $opendkim::params::socket,
   String                    $umask              = $opendkim::params::umask,
-  String                    $nameservers        = $opendkim::params::nameservers,
+  Optional[String]          $nameservers        = $opendkim::params::nameservers,
   Array[String]             $trusted_hosts      = $opendkim::params::trusted_hosts,
 
   Array[Struct[{
