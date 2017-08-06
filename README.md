@@ -129,6 +129,14 @@ You are pleased to fork this module and adapt it for you needs. I am open to any
 
 ## Release Notes/Contributors/Etc. 
 
+### v0.2 - Compatible with Puppetfrom 4.8 to newer
+
+* v0.2.3 Minor changes and corrections about empty values
+
+### v0.1 - Compatible with Puppet up to 4.6
+
+* v0.1.2 Virtual version (same as v0.1.0 but with bugfix about requirements and puppet version required)
+* v0.1.1 Use newer implementations of Puppet (v4.8 and newer). 
 * v0.1.0 Replace deprecated stdlib functions with puppet data types
 * v0.0.9 Correct some dependencies
 * v0.0.8 Closes #1 (SystemD with inline comments)
