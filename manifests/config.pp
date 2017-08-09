@@ -1,10 +1,17 @@
 # Class opendkim::config
 class opendkim::config inherits opendkim {
 
-  group { 'opendkim':
-    ensure => 'present',
-    name   => $opendkim::group,
-    gid    => $opendkim::gid,
+  if $opendkim::gid > -1 {
+    group { 'opendkim':
+      ensure => 'present',
+      name   => $opendkim::group,
+      gid    => $opendkim::gid,
+    }
+  } else {
+    group { 'opendkim':
+      ensure => 'present',
+      name   => $opendkim::group,
+    }
   }
 
   $shelluser = $::osfamily ? {
@@ -12,14 +19,45 @@ class opendkim::config inherits opendkim {
     default  => '/usr/sbin/nologin',
   }
 
-  user { 'opendkim':
-    ensure   => 'present',
-    name     => $opendkim::user,
-    gid      => $opendkim::gid,
-    home     => $opendkim::homedir,
-    password => '!!',
-    shell    => $shelluser,
-    uid      => $opendkim::uid,
+  if $opendkim::uid > -1 and $opendkim::gid > -1 {
+    user { 'opendkim':
+      ensure   => 'present',
+      name     => $opendkim::user,
+      gid      => $opendkim::gid,
+      home     => $opendkim::homedir,
+      password => '!!',
+      shell    => $shelluser,
+      uid      => $opendkim::uid,
+    }
+  } elsif $opendkim::uid > -1 {
+    user { 'opendkim':
+      ensure   => 'present',
+      name     => $opendkim::user,
+      home     => $opendkim::homedir,
+      password => '!!',
+      shell    => $shelluser,
+      uid      => $opendkim::uid,
+    }
+
+  } elsif $opendkim::gid > -1 {
+    user { 'opendkim':
+      ensure   => 'present',
+      name     => $opendkim::user,
+      gid      => $opendkim::gid,
+      home     => $opendkim::homedir,
+      password => '!!',
+      shell    => $shelluser,
+    }
+
+  } else {
+    user { 'opendkim':
+      ensure   => 'present',
+      name     => $opendkim::user,
+      home     => $opendkim::homedir,
+      password => '!!',
+      shell    => $shelluser,
+    }
+
   }
 
   file { $opendkim::sysconfigfile:

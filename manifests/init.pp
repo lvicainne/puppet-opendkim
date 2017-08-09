@@ -6,8 +6,8 @@
 class opendkim(
   String                    $user               = $opendkim::params::user,
   String                    $group              = $opendkim::params::group,
-  Integer                   $uid                = $opendkim::params::uid,
-  Integer                   $gid                = $opendkim::params::gid,
+  Integer[-1]               $uid                = $opendkim::params::uid,
+  Integer[-1]               $gid                = $opendkim::params::gid,
 
   Stdlib::Absolutepath      $homedir            = $opendkim::params::homedir,
   Stdlib::Absolutepath      $configdir          = $opendkim::params::configdir,

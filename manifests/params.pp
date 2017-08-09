@@ -1,8 +1,8 @@
 class opendkim::params {
   $user = 'opendkim'
   $group = 'opendkim'
-  $uid = 5010
-  $gid = 5010
+  $uid = -1
+  $gid = -1
 
   $configfile  = '/etc/opendkim.conf'
   $pidfile = '/var/run/opendkim/opendkim.pid'
