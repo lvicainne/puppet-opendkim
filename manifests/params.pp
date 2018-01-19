@@ -7,10 +7,12 @@ class opendkim::params {
   $configfile  = '/etc/opendkim.conf'
   $pidfile = '/var/run/opendkim/opendkim.pid'
   $homedir = '/var/run/opendkim'
+  $mode = 'sv'
 
   $package_name = 'opendkim'
 
   $log_why = 'no'
+  $canonicalization = 'relaxed/simple'
   $subdomains = 'yes'
   $socket = 'inet:8891@127.0.0.1'
   $umask = '0022'
@@ -18,6 +20,8 @@ class opendkim::params {
 
   $keys = []
   $nameservers       = undef
+
+  $removeoldsignatures = 'no'
 
   $service_enable    = true
   $service_ensure    = 'running'

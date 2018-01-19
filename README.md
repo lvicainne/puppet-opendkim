@@ -118,6 +118,9 @@ configuration file.
 ##### `subdomains`
 ##### `sysconfigfile`
 ##### `trusted_hosts`
+##### `mode`
+##### `canonicalization`
+##### `removeoldsignatures`
 
 ## Limitations
 
