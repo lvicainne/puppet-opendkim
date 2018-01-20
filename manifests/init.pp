@@ -21,6 +21,9 @@ class opendkim(
   String                    $umask              = $opendkim::params::umask,
   Optional[String]          $nameservers        = $opendkim::params::nameservers,
   Array[String]             $trusted_hosts      = $opendkim::params::trusted_hosts,
+  String                    $mode               = $opendkim::params::mode,
+  String                    $canonicalization   = $opendkim::params::canonicalization,
+  String                    $removeoldsignatures= $opendkim::params::removeoldsignatures,
 
   Array[Struct[{
     domain         => String,

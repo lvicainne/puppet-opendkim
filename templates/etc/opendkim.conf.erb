@@ -4,7 +4,7 @@
 PidFile <%= @pidfile %>
 
 # Selects operating modes. Valid modes are s (signer) and v (verifier). Default is v.
-Mode    sv
+Mode <%= @mode %>
 
 # Log activity to the system log.
 Syslog  yes
@@ -21,7 +21,7 @@ LogWhy <%= @log_why %>
 UserID  <%= @user %>:<%= @group %>
 
 # Create a socket through which your MTA can communicate.
-Socket  <%= @socket %>   
+Socket  <%= @socket %>
 
 # Required to use local socket with MTAs that access the socket as a non-
 # privileged user (e.g. Postfix)
@@ -33,7 +33,7 @@ Umask   <%= @umask %>
 ## SIGNING OPTIONS
 
 # Selects the canonicalization method(s) to be used when signing messages.
-Canonicalization        relaxed/simple
+Canonicalization        <%= @canonicalization %>
 
 # Domain(s) whose mail should be signed by this filter. Mail from other domains will
 # be verified rather than being signed. Uncomment and use your domain name.
@@ -80,3 +80,6 @@ SubDomains             <%= @subdomains %>
 <% if @nameservers -%>
 Nameservers            <%= @nameservers %>
 <% end -%>
+
+# Removes all existing signatures when operating in signing mode.
+RemoveOldSignatures    <%= @removeoldsignatures %>
