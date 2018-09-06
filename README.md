@@ -121,6 +121,7 @@ configuration file.
 ##### `mode`
 ##### `canonicalization`
 ##### `removeoldsignatures`
+##### `maximum_signed_bytes`
 
 ## Limitations
 
