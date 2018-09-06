@@ -83,3 +83,13 @@ Nameservers            <%= @nameservers %>
 
 # Removes all existing signatures when operating in signing mode.
 RemoveOldSignatures    <%= @removeoldsignatures %>
+
+<% if @maximum_signed_bytes -%>
+##  MaximumSignedBytes n
+##
+##  Don't sign more than "n" bytes of the message.  The default is to
+##  sign the entire message.  Setting this implies "BodyLengths".
+
+MaximumSignedBytes <%= @maximum_signed_bytes %>
+<% end -%>
+

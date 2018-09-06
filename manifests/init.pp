@@ -4,26 +4,27 @@
 #
 #Please see the README.md
 class opendkim(
-  String                    $user               = $opendkim::params::user,
-  String                    $group              = $opendkim::params::group,
-  Integer[-1]               $uid                = $opendkim::params::uid,
-  Integer[-1]               $gid                = $opendkim::params::gid,
+  String                    $user                 = $opendkim::params::user,
+  String                    $group                = $opendkim::params::group,
+  Integer[-1]               $uid                  = $opendkim::params::uid,
+  Integer[-1]               $gid                  = $opendkim::params::gid,
 
-  Stdlib::Absolutepath      $homedir            = $opendkim::params::homedir,
-  Stdlib::Absolutepath      $configdir          = $opendkim::params::configdir,
-  Stdlib::Absolutepath      $configfile         = $opendkim::params::configfile,
-  Stdlib::Absolutepath      $pidfile            = $opendkim::params::pidfile,
-  Stdlib::Absolutepath      $sysconfigfile      = $opendkim::params::sysconfigfile,
-  String                    $package_name       = $opendkim::params::package_name,
-  String                    $log_why            = $opendkim::params::log_why,
-  String                    $subdomains         = $opendkim::params::subdomains,
-  String                    $socket             = $opendkim::params::socket,
-  String                    $umask              = $opendkim::params::umask,
-  Optional[String]          $nameservers        = $opendkim::params::nameservers,
-  Array[String]             $trusted_hosts      = $opendkim::params::trusted_hosts,
-  String                    $mode               = $opendkim::params::mode,
-  String                    $canonicalization   = $opendkim::params::canonicalization,
-  String                    $removeoldsignatures= $opendkim::params::removeoldsignatures,
+  Stdlib::Absolutepath      $homedir              = $opendkim::params::homedir,
+  Stdlib::Absolutepath      $configdir            = $opendkim::params::configdir,
+  Stdlib::Absolutepath      $configfile           = $opendkim::params::configfile,
+  Stdlib::Absolutepath      $pidfile              = $opendkim::params::pidfile,
+  Stdlib::Absolutepath      $sysconfigfile        = $opendkim::params::sysconfigfile,
+  String                    $package_name         = $opendkim::params::package_name,
+  String                    $log_why              = $opendkim::params::log_why,
+  String                    $subdomains           = $opendkim::params::subdomains,
+  String                    $socket               = $opendkim::params::socket,
+  String                    $umask                = $opendkim::params::umask,
+  Optional[String]          $nameservers          = $opendkim::params::nameservers,
+  Array[String]             $trusted_hosts        = $opendkim::params::trusted_hosts,
+  String                    $mode                 = $opendkim::params::mode,
+  String                    $canonicalization     = $opendkim::params::canonicalization,
+  String                    $removeoldsignatures  = $opendkim::params::removeoldsignatures,
+  Optional[Integer]         $maximum_signed_bytes = $opendkim::params::maximum_signed_bytes,
 
   Array[Struct[{
     domain         => String,
@@ -31,11 +32,11 @@ class opendkim(
     publickey      => String,
     privatekey     => String,
     signingdomains => Array[String],
-  }]]                       $keys               = $opendkim::params::keys,
+  }]]                       $keys                 = $opendkim::params::keys,
 
-  Enum['running','stopped'] $service_ensure     = $opendkim::params::service_ensure,
-  Boolean                   $service_enable     = $opendkim::params::service_enable,
-  String                    $service_name       = $opendkim::params::service_name,
+  Enum['running','stopped'] $service_ensure       = $opendkim::params::service_ensure,
+  Boolean                   $service_enable       = $opendkim::params::service_enable,
+  String                    $service_name         = $opendkim::params::service_name,
 ) inherits opendkim::params {
 
   anchor { 'opendkim::begin': }

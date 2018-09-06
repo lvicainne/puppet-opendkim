@@ -17,6 +17,7 @@ class opendkim::params {
   $socket = 'inet:8891@127.0.0.1'
   $umask = '0022'
   $trusted_hosts = ['::1', '127.0.0.1', 'localhost']
+  $maximum_signed_bytes = undef
 
   $keys = []
   $nameservers       = undef
