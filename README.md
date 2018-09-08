@@ -135,6 +135,7 @@ You are pleased to fork this module and adapt it for you needs. I am open to any
 
 ### v0.2 - Compatible with Puppetfrom 4.8 to newer
 
+* v0.2.7 Add parameter maximum_signed_bytes
 * v0.2.6 Add parameters: mode, canonicalization, removeoldsignatures
 * v0.2.5 Make uid and gid not required any more to be defined
 * v0.2.4 Correction of the default directory for CentOs : from /etc/dkim to /etc/opendkim 
