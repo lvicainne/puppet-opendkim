@@ -93,3 +93,6 @@ RemoveOldSignatures    <%= @removeoldsignatures %>
 MaximumSignedBytes <%= @maximum_signed_bytes %>
 <% end -%>
 
+<% if @trustanchorfile -%>
+TrustAnchorFile         <%= @trustanchorfile %>
+<% end -%>
