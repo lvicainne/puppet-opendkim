@@ -122,6 +122,7 @@ configuration file.
 ##### `canonicalization`
 ##### `removeoldsignatures`
 ##### `maximum_signed_bytes`
+##### `trustanchorfile`
 
 ## Limitations
 
