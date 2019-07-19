@@ -20,7 +20,6 @@ class opendkim::params {
   $maximum_signed_bytes = undef
   $trustanchorfile  = undef
 
-
   $keys = []
   $nameservers       = undef
 
