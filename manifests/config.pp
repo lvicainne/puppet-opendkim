@@ -101,13 +101,14 @@ class opendkim::config inherits opendkim {
       mode    => '0600',
     }
 
-
-    file { "${opendkim::configdir}/keys/${key['domain']}/${key['selector']}":
-      ensure  => 'file',
-      content => $key['privatekey'],
-      owner   => $opendkim::user,
-      group   => $opendkim::group,
-      mode    => '0600',
+    if($opendkim::manage_private_keys == true) {
+      file { "${opendkim::configdir}/keys/${key['domain']}/${key['selector']}":
+        ensure  => 'file',
+        content => $key['privatekey'],
+        owner   => $opendkim::user,
+        group   => $opendkim::group,
+        mode    => '0600',
+      }
     }
 
     $selector = $key['selector']
