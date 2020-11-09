@@ -39,6 +39,13 @@
             "operatingsystemrelease": [
                 "16.04"
             ]
+        },
+        {
+            "operatingsystem": "FreeBSD",
+            "operatingsystemrelease": [
+                "11",
+                "12"
+            ]
         }
     ],
     "dependencies": [

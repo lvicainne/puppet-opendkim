@@ -1,11 +1,13 @@
 # Class opendkim::config
 class opendkim::config inherits opendkim {
-  file { $opendkim::sysconfigfile:
-    ensure  => 'file',
-    owner   => 'root',
-    group   => 'root',
-    mode    => '0640',
-    content => template('opendkim/sysconfig/opendkim.erb'),
+  if $opendkim::sysconfigfile {
+    file { $opendkim::sysconfigfile:
+      ensure  => 'file',
+      owner   => 'root',
+      group   => 'root',
+      mode    => '0640',
+      content => template('opendkim/sysconfig/opendkim.erb'),
+    }
   }
 
   $piddir = dirname($opendkim::pidfile )
