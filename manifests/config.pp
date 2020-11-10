@@ -10,6 +10,22 @@ class opendkim::config inherits opendkim {
     }
   }
 
+  if $::osfamily == 'FreeBSD' {
+    file_line {
+      default:
+        path => '/etc/rc.conf',
+        ;
+      'milteropendkim_uid':
+        line  => "milteropendkim_uid=\"${opendkim::user}\"",
+        match => '^milteropendkim_uid=',
+        ;
+      'milteropendkim_gid':
+        line  => "milteropendkim_gid=\"${opendkim::group}\"",
+        match => '^milteropendkim_gid=',
+        ;
+    }
+  }
+
   $piddir = dirname($opendkim::pidfile )
   file { $piddir:
     ensure => 'directory',
