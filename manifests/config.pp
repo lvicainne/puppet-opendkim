@@ -1,11 +1,29 @@
 # Class opendkim::config
 class opendkim::config inherits opendkim {
-  file { $opendkim::sysconfigfile:
-    ensure  => 'file',
-    owner   => 'root',
-    group   => 'root',
-    mode    => '0640',
-    content => template('opendkim/sysconfig/opendkim.erb'),
+  if $opendkim::sysconfigfile {
+    file { $opendkim::sysconfigfile:
+      ensure  => 'file',
+      owner   => 'root',
+      group   => 'root',
+      mode    => '0640',
+      content => template('opendkim/sysconfig/opendkim.erb'),
+    }
+  }
+
+  if $::osfamily == 'FreeBSD' {
+    file_line {
+      default:
+        path => '/etc/rc.conf',
+        ;
+      'milteropendkim_uid':
+        line  => "milteropendkim_uid=\"${opendkim::user}\"",
+        match => '^milteropendkim_uid=',
+        ;
+      'milteropendkim_gid':
+        line  => "milteropendkim_gid=\"${opendkim::group}\"",
+        match => '^milteropendkim_gid=',
+        ;
+    }
   }
 
   $piddir = dirname($opendkim::pidfile )
@@ -18,7 +36,7 @@ class opendkim::config inherits opendkim {
 
   file { "${opendkim::configdir}/keys":
     ensure => 'directory',
-    owner  => $opendkim::user,
+    owner  => 'root',
     group  => $opendkim::group,
     mode   => '0640',
   }
@@ -36,7 +54,7 @@ class opendkim::config inherits opendkim {
     ensure  => 'directory',
     recurse => true,
     purge   => true,
-    owner   => $opendkim::user,
+    owner   => 'root',
     group   => $opendkim::group,
     mode    => '0640',
   }
@@ -59,7 +77,7 @@ class opendkim::config inherits opendkim {
   file { 'opendkim-conf':
     ensure  => 'file',
     path    => $opendkim::configfile,
-    owner   => $opendkim::user,
+    owner   => 'root',
     group   => $opendkim::group,
     mode    => '0640',
     content => template('opendkim/etc/opendkim.conf.erb'),
@@ -68,7 +86,7 @@ class opendkim::config inherits opendkim {
   file { 'opendkim-TrustedHosts':
     ensure  => 'file',
     path    => "${opendkim::configdir}/TrustedHosts",
-    owner   => $opendkim::user,
+    owner   => 'root',
     group   => $opendkim::group,
     mode    => '0640',
     content => template('opendkim/etc/TrustedHosts.erb'),
@@ -77,7 +95,7 @@ class opendkim::config inherits opendkim {
   file { 'opendkim-SigningTable':
     ensure  => 'file',
     path    => "${opendkim::configdir}/SigningTable",
-    owner   => $opendkim::user,
+    owner   => 'root',
     group   => $opendkim::group,
     mode    => '0640',
     content => template('opendkim/etc/SigningTable.erb'),
@@ -86,7 +104,7 @@ class opendkim::config inherits opendkim {
   file { 'opendkim-KeyTable':
     ensure  => 'file',
     path    => "${opendkim::configdir}/KeyTable",
-    owner   => $opendkim::user,
+    owner   => 'root',
     group   => $opendkim::group,
     mode    => '0640',
     content => template('opendkim/etc/KeyTable.erb'),
@@ -96,18 +114,18 @@ class opendkim::config inherits opendkim {
     ensure_resource('file', "${opendkim::configdir}/keys/${key['domain']}", {
       ensure  => 'directory',
       recurse => true,
-      owner   => $opendkim::user,
+      owner   => 'root',
       group   => $opendkim::group,
-      mode    => '0600',
+      mode    => '0710',
     })
 
     if($opendkim::manage_private_keys == true) {
       file { "${opendkim::configdir}/keys/${key['domain']}/${key['selector']}":
         ensure  => 'file',
         content => $key['privatekey'],
-        owner   => $opendkim::user,
+        owner   => 'root',
         group   => $opendkim::group,
-        mode    => '0600',
+        mode    => '0640',
       }
     }
 
@@ -118,9 +136,9 @@ class opendkim::config inherits opendkim {
     file { "${opendkim::configdir}/keys/${key['domain']}/${key['selector']}.txt":
       ensure  => 'file',
       content => template('opendkim/public-rsa-key.erb'),
-      owner   => $opendkim::user,
+      owner   => 'root',
       group   => $opendkim::group,
-      mode    => '0600',
+      mode    => '0640',
     }
 
   }

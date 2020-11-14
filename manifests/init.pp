@@ -13,7 +13,7 @@ class opendkim(
   Stdlib::Absolutepath      $configdir            = $opendkim::params::configdir,
   Stdlib::Absolutepath      $configfile           = $opendkim::params::configfile,
   Stdlib::Absolutepath      $pidfile              = $opendkim::params::pidfile,
-  Stdlib::Absolutepath      $sysconfigfile        = $opendkim::params::sysconfigfile,
+  Optional[Stdlib::Absolutepath] $sysconfigfile   = $opendkim::params::sysconfigfile,
   String                    $package_name         = $opendkim::params::package_name,
   String                    $log_why              = $opendkim::params::log_why,
   String                    $subdomains           = $opendkim::params::subdomains,

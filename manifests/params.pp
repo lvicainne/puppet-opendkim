@@ -1,10 +1,7 @@
 class opendkim::params {
-  $user = 'opendkim'
-  $group = 'opendkim'
   $uid = -1
   $gid = -1
 
-  $configfile  = '/etc/opendkim.conf'
   $pidfile = '/var/run/opendkim/opendkim.pid'
   $homedir = '/var/run/opendkim'
   $mode = 'sv'
@@ -28,14 +25,29 @@ class opendkim::params {
 
   $service_enable    = true
   $service_ensure    = 'running'
-  $service_name      = 'opendkim'
 
   case $::osfamily {
     'Debian': {
+      $user             = 'opendkim'
+      $group            = 'opendkim'
+      $service_name     = 'opendkim'
+      $configfile       = '/etc/opendkim.conf'
       $sysconfigfile    = '/etc/default/opendkim'
       $configdir        = '/etc/opendkim'
     }
+    'FreeBSD': {
+      $user             = 'mailnull'
+      $group            = 'mailnull'
+      $service_name     = 'milter-opendkim'
+      $configfile       = '/usr/local/etc/mail/opendkim.conf'
+      $sysconfigfile    = undef
+      $configdir        = '/usr/local/etc/mail/opendkim'
+    }
     'Redhat': {
+      $user             = 'opendkim'
+      $group            = 'opendkim'
+      $service_name     = 'opendkim'
+      $configfile       = '/etc/opendkim.conf'
       $sysconfigfile    = '/etc/sysconfig/opendkim'
       $configdir        = '/etc/opendkim'
     }
