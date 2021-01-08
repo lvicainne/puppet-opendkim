@@ -83,6 +83,16 @@ class opendkim::config inherits opendkim {
     content => template('opendkim/etc/opendkim.conf.erb'),
   }
 
+  if $::osfamily == 'RedHat' {
+    file {'/etc/tmpfiles.d/opendkim.conf':
+      ensure  => present,
+      owner   => 'root',
+      group   => 'root',
+      mode    => '0644',
+      source  => 'puppet:///modules/opendkim/tmpfiles.d/opendkim.conf',
+    }
+  }
+
   file { 'opendkim-TrustedHosts':
     ensure  => 'file',
     path    => "${opendkim::configdir}/TrustedHosts",
