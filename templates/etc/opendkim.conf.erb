@@ -35,26 +35,47 @@ Umask   <%= @umask %>
 # Selects the canonicalization method(s) to be used when signing messages.
 Canonicalization        <%= @canonicalization %>
 
+<% if @alldomain -%>
 # Domain(s) whose mail should be signed by this filter. Mail from other domains will
 # be verified rather than being signed. Uncomment and use your domain name.
 # This parameter is not required if a SigningTable is in use.
+<% if @alldomain -%>
+Domain *
+<% else -%>
 #Domain                  test.fr
+<% end -%>
 
 # Defines the name of the selector to be used when signing messages.
+<% if @alldomain -%>
+Selector                <%= @selector %>
+<% else -%>
 #Selector                default
+<% end -%>
 
 # Gives the location of a private key to be used for signing ALL messages.
+<% if @alldomain -%>
+KeyFile                 <%= @configdir %>/keys/<%= @selector %>
+<% else -%>
 #KeyFile                 /etc/opendkim/keys/default.private
+<% end -%>
 
 # Gives the location of a file mapping key names to signing keys. In simple terms,
 # this tells OpenDKIM where to find your keys. If present, overrides any KeyFile
 # setting in the configuration file.
+<% if @alldomain -%>
+#KeyTable                /etc/opendkim/KeyTable
+<% else -%>
 KeyTable                refile:<%= @configdir %>/KeyTable
+<% end -%>
 
 # Defines a table used to select one or more signatures to apply to a message based
 # on the address found in the From: header field. In simple terms, this tells
 # OpenDKIM how to use your keys.
+<% if @alldomain -%>
+#SigningTable            refile:/etc/opendkim/SigningTable
+<% else -%>
 SigningTable            refile:<%= @configdir %>/SigningTable
+<% end -%>
 
 # Identifies a set of "external" hosts that may send mail through the server as one
 # of the signing domains without credentials as such.
