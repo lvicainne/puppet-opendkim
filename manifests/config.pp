@@ -107,16 +107,16 @@ class opendkim::config inherits opendkim {
     if($opendkim::manage_private_keys == true) {
       file { "${opendkim::configdir}/keys/${opendkim::selector}":
         ensure  => 'file',
-        content => $config::privatekey,
+        content => $opendkim::privatekey,
         owner   => 'root',
         group   => $opendkim::group,
         mode    => '0640',
       }
     }
 
-    $selector = $config::selector
+    $selector = $opendkim::selector
     $domain = 'all'
-    $publickey = $config::publickey
+    $publickey = $opendkim::publickey
 
     file { "${opendkim::configdir}/keys/${opendkim::selector}.txt":
       ensure  => 'file',
