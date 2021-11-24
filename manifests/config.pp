@@ -102,53 +102,81 @@ class opendkim::config inherits opendkim {
     content => template('opendkim/etc/TrustedHosts.erb'),
   }
 
-  file { 'opendkim-SigningTable':
-    ensure  => 'file',
-    path    => "${opendkim::configdir}/SigningTable",
-    owner   => 'root',
-    group   => $opendkim::group,
-    mode    => '0640',
-    content => template('opendkim/etc/SigningTable.erb'),
-  }
-
-  file { 'opendkim-KeyTable':
-    ensure  => 'file',
-    path    => "${opendkim::configdir}/KeyTable",
-    owner   => 'root',
-    group   => $opendkim::group,
-    mode    => '0640',
-    content => template('opendkim/etc/KeyTable.erb'),
-  }
-
-  $opendkim::keys.each |Hash $key| {
-    ensure_resource('file', "${opendkim::configdir}/keys/${key['domain']}", {
-      ensure  => 'directory',
-      recurse => true,
-      owner   => 'root',
-      group   => $opendkim::group,
-      mode    => '0710',
-    })
+  if $opendkim::alldomain {
 
     if($opendkim::manage_private_keys == true) {
-      file { "${opendkim::configdir}/keys/${key['domain']}/${key['selector']}":
+      file { "${opendkim::configdir}/keys/${opendkim::selector}":
         ensure  => 'file',
-        content => $key['privatekey'],
+        content => $opendkim::privatekey,
         owner   => 'root',
         group   => $opendkim::group,
         mode    => '0640',
       }
     }
 
-    $selector = $key['selector']
-    $domain = $key['domain']
-    $publickey = $key['publickey']
+    $selector = $opendkim::selector
+    $domain = 'all'
+    $publickey = $opendkim::publickey
 
-    file { "${opendkim::configdir}/keys/${key['domain']}/${key['selector']}.txt":
+    file { "${opendkim::configdir}/keys/${opendkim::selector}.txt":
       ensure  => 'file',
       content => template('opendkim/public-rsa-key.erb'),
       owner   => 'root',
       group   => $opendkim::group,
       mode    => '0640',
+    }
+
+  } else {
+
+    file { 'opendkim-SigningTable':
+      ensure  => 'file',
+      path    => "${opendkim::configdir}/SigningTable",
+      owner   => 'root',
+      group   => $opendkim::group,
+      mode    => '0640',
+      content => template('opendkim/etc/SigningTable.erb'),
+    }
+
+    file { 'opendkim-KeyTable':
+      ensure  => 'file',
+      path    => "${opendkim::configdir}/KeyTable",
+      owner   => 'root',
+      group   => $opendkim::group,
+      mode    => '0640',
+      content => template('opendkim/etc/KeyTable.erb'),
+    }
+
+    $opendkim::keys.each |Hash $key| {
+      ensure_resource('file', "${opendkim::configdir}/keys/${key['domain']}", {
+        ensure  => 'directory',
+        recurse => true,
+        owner   => 'root',
+        group   => $opendkim::group,
+        mode    => '0710',
+      })
+
+      if($opendkim::manage_private_keys == true) {
+        file { "${opendkim::configdir}/keys/${key['domain']}/${key['selector']}":
+          ensure  => 'file',
+          content => $key['privatekey'],
+          owner   => 'root',
+          group   => $opendkim::group,
+          mode    => '0640',
+        }
+      }
+
+      $selector = $key['selector']
+      $domain = $key['domain']
+      $publickey = $key['publickey']
+
+      file { "${opendkim::configdir}/keys/${key['domain']}/${key['selector']}.txt":
+        ensure  => 'file',
+        content => template('opendkim/public-rsa-key.erb'),
+        owner   => 'root',
+        group   => $opendkim::group,
+        mode    => '0640',
+      }
+
     }
 
   }

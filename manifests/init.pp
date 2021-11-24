@@ -27,7 +27,10 @@ class opendkim(
   Optional[Integer]         $maximum_signed_bytes = $opendkim::params::maximum_signed_bytes,
   Optional[String]          $trustanchorfile      = $opendkim::params::trustanchorfile,
   Boolean                   $manage_private_keys  = $opendkim::params::manage_private_keys,
-
+  Boolean                   $alldomain            = $opendkim::params::alldomain,
+  Optional[String]          $selector             = $opendkim::params::selector,
+  Optional[String]          $publickey            = $opendkim::params::publickey,
+  Optional[String]          $privatekey           = $opendkim::params::privatekey,
 
   Array[Struct[{
     domain         => String,
