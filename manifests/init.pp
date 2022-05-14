@@ -36,7 +36,7 @@ class opendkim(
     domain         => String,
     selector       => String,
     publickey      => String,
-    privatekey     => String,
+    privatekey     => Variant[String,Deferred],
     signingdomains => Array[String],
   }]]                       $keys                 = $opendkim::params::keys,
 
