@@ -16,6 +16,7 @@ class opendkim::params {
   $trusted_hosts = ['::1', '127.0.0.1', 'localhost']
   $maximum_signed_bytes = undef
   $trustanchorfile  = undef
+  $senderheaders = undef
   $manage_private_keys = true
   $alldomain = false
   $selector = undef

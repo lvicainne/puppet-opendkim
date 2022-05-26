@@ -26,6 +26,7 @@ class opendkim(
   String                    $removeoldsignatures  = $opendkim::params::removeoldsignatures,
   Optional[Integer]         $maximum_signed_bytes = $opendkim::params::maximum_signed_bytes,
   Optional[String]          $trustanchorfile      = $opendkim::params::trustanchorfile,
+  Optional[Array]           $senderheaders        = $opendkim::params::senderheaders,
   Boolean                   $manage_private_keys  = $opendkim::params::manage_private_keys,
   Boolean                   $alldomain            = $opendkim::params::alldomain,
   Optional[String]          $selector             = $opendkim::params::selector,
