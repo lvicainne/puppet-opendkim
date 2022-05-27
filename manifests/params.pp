@@ -22,6 +22,8 @@ class opendkim::params {
   $selector = undef
   $publickey = undef
   $privatekey = undef
+  $signaturealgorithm = undef
+  $minimumkeybits = undef
 
   $keys = []
   $nameservers       = undef

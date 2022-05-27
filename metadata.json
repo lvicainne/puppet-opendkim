@@ -1,6 +1,6 @@
 {
     "name": "lvicainne-opendkim",
-    "version": "0.2.9",
+    "version": "0.3.0",
     "author": "lvicainne",
     "license": "Apache-2.0",
     "summary": "Manage an OpenDKIM configuration",
@@ -15,7 +15,9 @@
             "operatingsystemrelease": [
                 "5",
                 "6",
-                "7"
+                "7",
+                "8",
+                "9"
             ]
         },
         {
@@ -23,7 +25,9 @@
             "operatingsystemrelease": [
                 "5",
                 "6",
-                "7"
+                "7",
+                "8",
+                "9"
             ]
         },
         {
@@ -31,7 +35,8 @@
             "operatingsystemrelease": [
                 "6",
                 "7",
-                "8"
+                "8",
+                "9"
             ]
         },
         {

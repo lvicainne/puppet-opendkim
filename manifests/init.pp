@@ -32,6 +32,8 @@ class opendkim(
   Optional[String]          $selector             = $opendkim::params::selector,
   Optional[String]          $publickey            = $opendkim::params::publickey,
   Optional[String]          $privatekey           = $opendkim::params::privatekey,
+  Optional[String]          $signaturealgorithm   = $opendkim::params::signaturealgorithm,
+  Optional[Integer]         $minimumkeybits       = $opendkim::params::minimumkeybits,
 
   Array[Struct[{
     domain         => String,

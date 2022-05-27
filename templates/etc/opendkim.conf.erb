@@ -114,9 +114,18 @@ MaximumSignedBytes <%= @maximum_signed_bytes %>
 <% end -%>
 
 <% if @trustanchorfile -%>
-TrustAnchorFile         <%= @trustanchorfile %>
-<% end -%>
+TrustAnchorFile        <%= @trustanchorfile %>
 
+<% end -%>
 <% if @senderheaders -%>
+
 SenderHeaders          <%= @senderheaders.join(',') %>
+<% end -%>
+<% if @signaturealgorithm -%>
+SignatureAlgorithm     <%= @signaturealgorithm %>
+
+<% end -%>
+<% if @minimumkeybits -%>
+MinimumKeyBits         <%= @minimumkeybits %>
+
 <% end -%>
