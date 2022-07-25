@@ -33,7 +33,7 @@ class opendkim::params {
   $service_enable    = true
   $service_ensure    = 'running'
 
-  case $::osfamily {
+  case fact('os.family') {
     'Debian': {
       $user             = 'opendkim'
       $group            = 'opendkim'
@@ -59,7 +59,7 @@ class opendkim::params {
       $configdir        = '/etc/opendkim'
     }
     default: {
-      fail("${::operatingsystem} is not supported by this module.")
+      fail("${fact('os.family')} is not supported by this module.")
     }
   }
 }
