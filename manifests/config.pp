@@ -170,8 +170,14 @@ class opendkim::config inherits opendkim {
       $selector = $key['selector']
       $domain = $key['domain']
       $publickey = $key['publickey']
-      $publickeyextended = $key['publickeyextended']
-      $hash_algorithms = $key['hash_algorithms']
+
+      if ($key['publickeyextended']) {
+        $publickeyextended = $key['publickeyextended']
+      }
+
+      if ($key['hash_algorithms']) {
+        $hash_algorithms = $key['hash_algorithms']
+      }
 
       file { "${opendkim::configdir}/keys/${key['domain']}/${key['selector']}.txt":
         ensure  => 'file',
