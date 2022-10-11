@@ -38,11 +38,13 @@ class opendkim(
   Optional[Integer]         $minimumkeybits       = $opendkim::params::minimumkeybits,
 
   Array[Struct[{
-    domain         => String,
-    selector       => String,
-    publickey      => String,
-    privatekey     => Variant[String,Deferred],
-    signingdomains => Array[String],
+    domain            => String,
+    selector          => String,
+    hash_algorithms   => String,
+    publickey         => String,
+    publickeyextended => String,
+    privatekey        => Variant[String,Deferred],
+    signingdomains    => Array[String],
   }]]                       $keys                 = $opendkim::params::keys,
 
   Enum['running','stopped'] $service_ensure       = $opendkim::params::service_ensure,
