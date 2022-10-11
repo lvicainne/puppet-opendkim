@@ -1,2 +1,7 @@
-<%= @selector -%>._domainkey      IN      TXT     ( "v=DKIM1; k=rsa; "
+<%= @selector -%>._domainkey      IN      TXT     ( "v=DKIM1; <% if @hash_algorithms -%>h=<%= @hash_algorithms -%>; <% end -%>k=rsa; "
+       <% if @publickey and @publickeyextended -%>
+         "<%= @publickey -%>"
+         "<%= @publickeyextended -%>" )  ; ----- DKIM key <%= @selector -%> for <%= @domain -%>
+       <% else -%>
          "<%= @publickey -%>" )  ; ----- DKIM key <%= @selector -%> for <%= @domain -%>
+       <% end -%>

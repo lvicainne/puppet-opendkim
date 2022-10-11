@@ -21,7 +21,9 @@ class opendkim::params {
   $alldomain = false
   $selector = undef
   $publickey = undef
+  $publickeyextended = undef
   $privatekey = undef
+  $hash_algorithms = undef
   $signaturealgorithm = undef
   $minimumkeybits = undef
 

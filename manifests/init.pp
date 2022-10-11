@@ -31,6 +31,7 @@ class opendkim(
   Boolean                   $alldomain            = $opendkim::params::alldomain,
   Optional[String]          $selector             = $opendkim::params::selector,
   Optional[String]          $publickey            = $opendkim::params::publickey,
+  Optional[String]          $publickeyextended    = $opendkim::params::publickeyextended,
   Optional[String]          $privatekey           = $opendkim::params::privatekey,
   Optional[String]          $signaturealgorithm   = $opendkim::params::signaturealgorithm,
   Optional[Integer]         $minimumkeybits       = $opendkim::params::minimumkeybits,
@@ -46,6 +47,8 @@ class opendkim(
   Enum['running','stopped'] $service_ensure       = $opendkim::params::service_ensure,
   Boolean                   $service_enable       = $opendkim::params::service_enable,
   String                    $service_name         = $opendkim::params::service_name,
+
+  String                    $hash_algorithms      = $opendkim::params::hash_algorithms,
 ) inherits opendkim::params {
 
   anchor { 'opendkim::begin': }
