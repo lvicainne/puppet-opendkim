@@ -68,7 +68,9 @@ opendkim::trusted_hosts:
 opendkim::keys:
     - domain: mydomain.com
       selector: default
+      hash_algorithms: "sha1256"
       publickey: "p=yourPublicKey"
+      publickeyextended: "secondLineofPublicKey"
       privatekey: | 
         -----BEGIN RSA PRIVATE KEY-----
         Your Private Key
