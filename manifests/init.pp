@@ -40,9 +40,9 @@ class opendkim(
   Array[Struct[{
     domain            => String,
     selector          => String,
-    hash_algorithms   => String,
+    hash_algorithms   => Optional[String],
     publickey         => String,
-    publickeyextended => String,
+    publickeyextended => Optional[String],
     privatekey        => Variant[String,Deferred],
     signingdomains    => Array[String],
   }]]                       $keys                 = $opendkim::params::keys,
