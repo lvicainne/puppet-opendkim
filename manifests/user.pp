@@ -12,7 +12,7 @@ class opendkim::user inherits opendkim {
     }
   }
 
-  $shelluser = $::osfamily ? {
+  $shelluser = fact('os.family') ? {
     'RedHat' => '/sbin/nologin',
     default  => '/usr/sbin/nologin',
   }
