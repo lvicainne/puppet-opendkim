@@ -10,7 +10,7 @@ class opendkim::config inherits opendkim {
     }
   }
 
-  if $::osfamily == 'FreeBSD' {
+  if fact('os.family') == 'FreeBSD' {
     file_line {
       default:
         path => '/etc/rc.conf',
@@ -83,7 +83,7 @@ class opendkim::config inherits opendkim {
     content => template('opendkim/etc/opendkim.conf.erb'),
   }
 
-  if $::osfamily == 'RedHat' {
+  if fact('os.family') == 'RedHat' {
     file {'/etc/tmpfiles.d/opendkim.conf':
       ensure  => present,
       owner   => 'root',
