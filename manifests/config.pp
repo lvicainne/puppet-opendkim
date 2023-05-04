@@ -121,6 +121,8 @@ class opendkim::config {
         'signaturealgorithm'   => $opendkim::signaturealgorithm,
         'minimumkeybits'       => $opendkim::minimumkeybits,
         'additional_options'   => $opendkim::additional_options,
+        'autorestart'          => $opendkim::autorestart,
+        'autorestartrate'      => $opendkim::autorestartrate,
     }),
   }
 
@@ -137,11 +139,12 @@ class opendkim::config {
   if $opendkim::alldomain {
     if $opendkim::manage_private_keys == true {
       file { "${opendkim::configdir}/keys/${opendkim::selector}":
-        ensure  => file,
-        content => $opendkim::privatekey,
-        owner   => 'root',
-        group   => $opendkim::group,
-        mode    => '0640',
+        ensure    => file,
+        content   => $opendkim::privatekey,
+        owner     => 'root',
+        group     => $opendkim::group,
+        mode      => '0640',
+        show_diff => false,
       }
     }
 
@@ -191,11 +194,12 @@ class opendkim::config {
 
       if $opendkim::manage_private_keys == true {
         file { "${opendkim::configdir}/keys/${key['domain']}/${key['selector']}":
-          ensure  => 'file',
-          content => $key['privatekey'],
-          owner   => $opendkim::user,
-          group   => $opendkim::group,
-          mode    => '0600',
+          ensure    => 'file',
+          content   => $key['privatekey'],
+          owner     => $opendkim::user,
+          group     => $opendkim::group,
+          mode      => '0600',
+          show_diff => false,
         }
       }
 

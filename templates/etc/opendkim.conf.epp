@@ -17,9 +17,20 @@
       Optional[Array[String,1]] $senderheaders,
       Optional[String[1]] $signaturealgorithm,
       Optional[Integer[1]] $minimumkeybits,
-      Hash[String,Variant[Array[String],String,Integer,Boolean]] $additional_options
+      Hash[String,Variant[Array[String],String,Integer,Boolean]] $additional_options,
+      Variant[Boolean,Enum['yes','no']] $autorestart,
+      Optional[Pattern[/\A[0-9]+\/[0-9]+[sSmMhHdD]\z/]] $autorestartrate
 | -%>
 # THIS FILE IS MANAGED BY PUPPET
+
+<% if $autorestart { -%>
+# Auto restart the filter on failures
+AutoRestart <%= $autorestart ? { true => 'yes', false => 'no', default => $autorestart } %>
+<% } -%>
+<% if $autorestartrate { -%>
+# Maximum restart rate
+AutoRestartRate <%= $autorestartrate %>
+<% } -%>
 
 # Specifies the path to the process ID file.
 PidFile <%= $pidfile %>

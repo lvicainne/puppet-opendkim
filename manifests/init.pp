@@ -91,6 +91,10 @@
 #   The privatekey used for signing in alldomain mode.
 # @param hash_algorithms
 #   The hash_algorithms used for signing in alldomain mode.
+# @param autorestart
+#   Either boolean or yes/no as to whether opendkim should restart on failure
+# @param autorestartrate
+#   The rate limit on auto restarting
 #
 # @see Please see the README.md
 class opendkim (
@@ -139,6 +143,8 @@ class opendkim (
   Optional[String[1]]             $publickeyextended    = undef,
   Optional[String[1]]             $privatekey           = undef,
   Optional[String[1]]             $hash_algorithms      = undef,
+  Optional[Variant[Boolean,Enum['yes','no']]] $autorestart            = undef,
+  Optional[Pattern[/\A[0-9]+\/[0-9]+[sSmMhHdD]\z/]] $autorestartrate  = undef,
 ) {
   contain opendkim::install
   contain opendkim::user
