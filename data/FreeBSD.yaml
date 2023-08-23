@@ -1,0 +1,9 @@
+---
+opendkim::user: 'mailnull'
+opendkim::group: 'mailnull'
+opendkim::service_name: 'milter-opendkim'
+opendkim::configfile: '/usr/local/etc/mail/opendkim.conf'
+opendkim::sysconfigfile: ~
+opendkim::configdir: '/usr/local/etc/mail/opendkim'
+opendkim::homedir: '/var/run/opendkim'
+opendkim::pidfile: '/var/run/opendkim/opendkim.pid'

@@ -1,3 +1,5 @@
+<%- | Array[String,1] $trusted_hosts
+| -%>
 # THIS FILE IS MANAGED BY PUPPET
 
 # To use this file, uncomment the #ExternalIgnoreList and/or the #InternalHosts
@@ -5,6 +7,6 @@
 # may be added on separate lines (IP addresses, hostnames, or CIDR ranges).
 # The localhost IP (127.0.0.1) should always be the first entry in this file.
 
-<% @trusted_hosts.each do |host| -%>
-<%= host %>
-<% end -%>
+<% $trusted_hosts.each |$_host| { -%>
+<%= $_host %>
+<% } -%>

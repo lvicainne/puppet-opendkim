@@ -1,0 +1,8 @@
+<%- | Array[Opendkim::Key] $keys,
+      Stdlib::Absolutepath $configdir
+| -%>
+# THIS FILE IS MANAGED BY PUPPET
+
+<% $keys.each |$_key| { -%>
+<%= $_key['selector'] %>._domainkey.<%= $_key['domain'] %> <%= $_key['domain'] %>:<%= $_key['selector'] %>:<%= $configdir %>/keys/<%= $_key['domain'] %>/<%= $_key['selector'] %>
+<% } -%>

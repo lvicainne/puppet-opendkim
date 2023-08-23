@@ -1,0 +1,9 @@
+<%- | Array[Opendkim::Key] $keys
+| -%>
+# THIS FILE IS MANAGED BY PUPPET
+
+<% $keys.each |$_key| { -%>
+<% $_key['signingdomains'].each |$_signingdomain| { -%>
+<%= $_signingdomain %> <%= $_key['selector'] %>._domainkey.<%= $_key['domain'] %>
+<% } -%>
+<% } -%>

@@ -1,0 +1,3 @@
+---
+opendkim::sysconfigfile: '/etc/sysconfig/opendkim'
+opendkim::user_shell: '/sbin/nologin'
