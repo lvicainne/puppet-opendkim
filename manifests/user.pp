@@ -1,59 +1,24 @@
-class opendkim::user inherits opendkim {
-  if $opendkim::gid > -1 {
-    group { 'opendkim':
-      ensure => 'present',
-      name   => $opendkim::group,
-      gid    => $opendkim::gid,
-    }
-  } else {
-    group { 'opendkim':
-      ensure => 'present',
-      name   => $opendkim::group,
-    }
+# @summary Managing the opendkim user
+#
+# @api private
+class opendkim::user {
+  assert_private()
+
+  group { 'opendkim':
+    ensure => present,
+    name   => $opendkim::group,
+    gid    => $opendkim::gid,
+    system => $opendkim::group_system,
   }
 
-  $shelluser = fact('os.family') ? {
-    'RedHat' => '/sbin/nologin',
-    default  => '/usr/sbin/nologin',
-  }
-
-  if $opendkim::uid > -1 and $opendkim::gid > -1 {
-    user { 'opendkim':
-      ensure   => 'present',
-      name     => $opendkim::user,
-      gid      => $opendkim::gid,
-      home     => $opendkim::homedir,
-      password => '!!',
-      shell    => $shelluser,
-      uid      => $opendkim::uid,
-    }
-  } elsif $opendkim::uid > -1 {
-    user { 'opendkim':
-      ensure   => 'present',
-      name     => $opendkim::user,
-      home     => $opendkim::homedir,
-      password => '!!',
-      shell    => $shelluser,
-      uid      => $opendkim::uid,
-    }
-
-  } elsif $opendkim::gid > -1 {
-    user { 'opendkim':
-      ensure   => 'present',
-      name     => $opendkim::user,
-      gid      => $opendkim::gid,
-      home     => $opendkim::homedir,
-      password => '!!',
-      shell    => $shelluser,
-    }
-
-  } else {
-    user { 'opendkim':
-      ensure   => 'present',
-      name     => $opendkim::user,
-      home     => $opendkim::homedir,
-      password => '!!',
-      shell    => $shelluser,
-    }
+  user { 'opendkim':
+    ensure   => present,
+    gid      => $opendkim::gid,
+    home     => $opendkim::homedir,
+    name     => $opendkim::user,
+    password => '!!',
+    shell    => $opendkim::user_shell,
+    system   => $opendkim::user_system,
+    uid      => $opendkim::uid,
   }
 }

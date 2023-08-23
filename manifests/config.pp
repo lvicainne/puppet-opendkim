@@ -1,12 +1,21 @@
-# Class opendkim::config
-class opendkim::config inherits opendkim {
+# @summary Configure opendkim
+#
+# @api private
+class opendkim::config {
+  assert_private()
+
   if $opendkim::sysconfigfile {
     file { $opendkim::sysconfigfile:
-      ensure  => 'file',
+      ensure  => file,
       owner   => 'root',
       group   => 'root',
       mode    => '0640',
-      content => template('opendkim/sysconfig/opendkim.erb'),
+      content => epp("${module_name}/sysconfig/opendkim.epp", {
+          'socket'     => $opendkim::socket,
+          'configfile' => $opendkim::configfile,
+          'configdir'  => $opendkim::configdir,
+          'pidfile'    => $opendkim::pidfile,
+      }),
     }
   }
 
@@ -26,24 +35,36 @@ class opendkim::config inherits opendkim {
     }
   }
 
-  $piddir = dirname($opendkim::pidfile )
-  file { $piddir:
-    ensure => 'directory',
-    owner  => $opendkim::user,
-    group  => $opendkim::group,
-    mode   => '0755',
+  $_piddir = dirname($opendkim::pidfile)
+  if fact('os.family') == 'RedHat' {
+    file_line { "${opendkim::service_name}.service RuntimeDirectory":
+      path  => "/usr/lib/systemd/system/${opendkim::service_name}.service",
+      line  => "RuntimeDirectory=${basename($_piddir)}",
+      match => '^RuntimeDirectory=',
+      after => '^Restart=',
+    }
+    -> file_line { "${opendkim::service_name}.service RuntimeDirectoryMode":
+      path  => "/usr/lib/systemd/system/${opendkim::service_name}.service",
+      line  => "RuntimeDirectoryMode=${opendkim::rundir_mode}",
+      match => '^RuntimeDirectoryMode=',
+      after => '^RuntimeDirectory=',
+    }
+
+    file { '/etc/tmpfiles.d/opendkim.conf':
+      ensure => absent,
+    }
+  } else {
+    file { $_piddir:
+      ensure => directory,
+      owner  => $opendkim::user,
+      group  => $opendkim::group,
+      mode   => $opendkim::rundir_mode,
+    }
   }
 
-  file { "${opendkim::configdir}/keys":
-    ensure => 'directory',
-    owner  => 'root',
-    group  => $opendkim::group,
-    mode   => '0640',
-  }
-
-  if !defined(File[$opendkim::homedir]) {
+  unless defined(File[$opendkim::homedir]) or $opendkim::homedir == $_piddir {
     file { $opendkim::homedir:
-      ensure => 'directory',
+      ensure => directory,
       owner  => $opendkim::user,
       group  => $opendkim::group,
       mode   => '0755',
@@ -51,7 +72,7 @@ class opendkim::config inherits opendkim {
   }
 
   file { $opendkim::configdir:
-    ensure  => 'directory',
+    ensure  => directory,
     recurse => true,
     purge   => true,
     owner   => 'root',
@@ -59,54 +80,64 @@ class opendkim::config inherits opendkim {
     mode    => '0640',
   }
 
-  if($opendkim::configdir != '/etc/opendkim') {
-    file { '/etc/opendkim':
-      ensure => 'absent',
+  file { "${opendkim::configdir}/keys":
+    ensure => directory,
+    owner  => 'root',
+    group  => $opendkim::group,
+    mode   => '0640',
+  }
+
+  $_other_configdirs = ['/etc/opendkim', '/etc/dkim'] - $opendkim::configdir
+  $_other_configdirs.each |Stdlib::Absolutepath $_file| {
+    file { $_file:
+      ensure => absent,
       force  => true,
     }
   }
 
-  if($opendkim::configdir != '/etc/dkim') {
-    file { '/etc/dkim':
-      ensure => 'absent',
-      force  => true,
-    }
-  }
-
-
-  file { 'opendkim-conf':
+  file { $opendkim::configfile:
     ensure  => 'file',
-    path    => $opendkim::configfile,
     owner   => 'root',
     group   => $opendkim::group,
     mode    => '0640',
-    content => template('opendkim/etc/opendkim.conf.erb'),
+    content => epp("${module_name}/etc/opendkim.conf.epp", {
+        'pidfile'              => $opendkim::pidfile,
+        'mode'                 => $opendkim::mode,
+        'log_why'              => $opendkim::log_why,
+        'user'                 => $opendkim::user,
+        'group'                => $opendkim::group,
+        'socket'               => $opendkim::socket,
+        'umask'                => $opendkim::umask,
+        'canonicalization'     => $opendkim::canonicalization,
+        'alldomain'            => $opendkim::alldomain,
+        'selector'             => $opendkim::selector,
+        'configdir'            => $opendkim::configdir,
+        'subdomains'           => $opendkim::subdomains,
+        'nameservers'          => $opendkim::nameservers,
+        'removeoldsignatures'  => $opendkim::removeoldsignatures,
+        'maximum_signed_bytes' => $opendkim::maximum_signed_bytes,
+        'trustanchorfile'      => $opendkim::trustanchorfile,
+        'senderheaders'        => $opendkim::senderheaders,
+        'signaturealgorithm'   => $opendkim::signaturealgorithm,
+        'minimumkeybits'       => $opendkim::minimumkeybits,
+        'additional_options'   => $opendkim::additional_options,
+    }),
   }
 
-  if fact('os.family') == 'RedHat' {
-    file {'/etc/tmpfiles.d/opendkim.conf':
-      ensure  => present,
-      owner   => 'root',
-      group   => 'root',
-      mode    => '0644',
-      source  => 'puppet:///modules/opendkim/tmpfiles.d/opendkim.conf',
-    }
-  }
-
-  file { 'opendkim-TrustedHosts':
-    ensure  => 'file',
-    path    => "${opendkim::configdir}/TrustedHosts",
+  file { "${opendkim::configdir}/TrustedHosts":
+    ensure  => file,
     owner   => 'root',
     group   => $opendkim::group,
     mode    => '0640',
-    content => template('opendkim/etc/TrustedHosts.erb'),
+    content => epp("${module_name}/etc/TrustedHosts.epp", {
+        'trusted_hosts' => $opendkim::trusted_hosts,
+    }),
   }
 
   if $opendkim::alldomain {
-
-    if($opendkim::manage_private_keys == true) {
+    if $opendkim::manage_private_keys == true {
       file { "${opendkim::configdir}/keys/${opendkim::selector}":
-        ensure  => 'file',
+        ensure  => file,
         content => $opendkim::privatekey,
         owner   => 'root',
         group   => $opendkim::group,
@@ -114,56 +145,51 @@ class opendkim::config inherits opendkim {
       }
     }
 
-    $selector = $opendkim::selector
-    $domain = 'all'
-    $publickey = $opendkim::publickey
-
-    if ($opendkim::publickeyextended) {
-      $publickeyextended = $opendkim::publickeyextended
-    }
-
-    if ($opendkim::hash_algorithms) {
-      $hash_algorithms = $opendkim::hash_algorithms
-    }
-
     file { "${opendkim::configdir}/keys/${opendkim::selector}.txt":
       ensure  => 'file',
-      content => template('opendkim/public-rsa-key.erb'),
+      content => epp("${module_name}/public-rsa-key.epp", {
+          'selector'          => $opendkim::selector,
+          'domain'            => 'all',
+          'publickey'         => $opendkim::publickey,
+          'publickeyextended' => pick_default($opendkim::publickeyextended, undef),
+          'hash_algorithms'   => pick_default($opendkim::hash_algorithms, undef),
+      }),
       owner   => 'root',
       group   => $opendkim::group,
       mode    => '0640',
     }
-
   } else {
-
-    file { 'opendkim-SigningTable':
+    file { "${opendkim::configdir}/SigningTable":
       ensure  => 'file',
-      path    => "${opendkim::configdir}/SigningTable",
       owner   => 'root',
       group   => $opendkim::group,
       mode    => '0640',
-      content => template('opendkim/etc/SigningTable.erb'),
+      content => epp("${module_name}/etc/SigningTable.epp", {
+          'keys' => $opendkim::keys,
+      }),
     }
 
-    file { 'opendkim-KeyTable':
+    file { "${opendkim::configdir}/KeyTable":
       ensure  => 'file',
-      path    => "${opendkim::configdir}/KeyTable",
       owner   => 'root',
       group   => $opendkim::group,
       mode    => '0640',
-      content => template('opendkim/etc/KeyTable.erb'),
+      content => epp("${module_name}/etc/KeyTable.epp", {
+          'keys'      => $opendkim::keys,
+          'configdir' => $opendkim::configdir,
+      }),
     }
 
     $opendkim::keys.each |Hash $key| {
       ensure_resource('file', "${opendkim::configdir}/keys/${key['domain']}", {
-        ensure  => 'directory',
-        recurse => true,
-        owner   => 'root',
-        group   => $opendkim::group,
-        mode    => '0710',
+          ensure  => directory,
+          recurse => true,
+          owner   => 'root',
+          group   => $opendkim::group,
+          mode    => '0710',
       })
 
-      if($opendkim::manage_private_keys == true) {
+      if $opendkim::manage_private_keys == true {
         file { "${opendkim::configdir}/keys/${key['domain']}/${key['selector']}":
           ensure  => 'file',
           content => $key['privatekey'],
@@ -173,28 +199,19 @@ class opendkim::config inherits opendkim {
         }
       }
 
-      $selector = $key['selector']
-      $domain = $key['domain']
-      $publickey = $key['publickey']
-
-      if ($key['publickeyextended']) {
-        $publickeyextended = $key['publickeyextended']
-      }
-
-      if ($key['hash_algorithms']) {
-        $hash_algorithms = $key['hash_algorithms']
-      }
-
       file { "${opendkim::configdir}/keys/${key['domain']}/${key['selector']}.txt":
-        ensure  => 'file',
-        content => template('opendkim/public-rsa-key.erb'),
+        ensure  => file,
+        content => epp("${module_name}/public-rsa-key.epp", {
+            'selector'          => $key['selector'],
+            'domain'            => $key['domain'],
+            'publickey'         => $key['publickey'],
+            'publickeyextended' => $key.get('publickeyextended'),
+            'hash_algorithms'   => $key.get('hash_algorithms'),
+        }),
         owner   => 'root',
         group   => $opendkim::group,
         mode    => '0640',
       }
-
     }
-
   }
-
 }
