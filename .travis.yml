@@ -5,7 +5,7 @@ script:
   - "rake validate"
 branches:
   only:
-    - master
+    - main
     - puppet-v4.0
 matrix:
   fast_finish: true

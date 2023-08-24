@@ -3,12 +3,11 @@
 [![Puppet Forge](http://img.shields.io/puppetforge/v/lvicainne/opendkim.svg)](https://forge.puppetlabs.com/lvicainne/opendkim)
 [![Build Status](https://travis-ci.org/lvicainne/puppet-opendkim.svg?branch=master)](https://travis-ci.org/lvicainne/puppet-opendkim)
 
-#### Table of Contents
+## Table of Contents
 
 1. [Description](#description)
 2. [Setup - The basics of getting started with OpenDKIM](#setup)
     * [What opendkim module affects](#what-opendkim-module-affects)
-    * [Setup requirements](#setup-requirements)
     * [Beginning with opendkim](#beginning-with-opendkim)
 3. [Usage - Configuration options and additional functionality](#usage)
 4. [Reference - An under-the-hood peek at what the module is doing and how](#reference)
@@ -21,7 +20,7 @@ A Puppet module to install and manage OpenDKIM
 
 ## Setup
 
-### What OpenDKIM affects 
+### What OpenDKIM affects {#what-opendkim-module-affects}
 
 * install OpenDKIM package
 * modify the configuration file /etc/opendkim.conf
@@ -30,7 +29,7 @@ A Puppet module to install and manage OpenDKIM
 
 Warning : this package will replace all your RSA keys ! Before using it, be sure to add all your keys in Hiera !
 
-### Beginning with OpenDKIM	
+### Beginning with OpenDKIM
 
 A basic example is as follows:
 
@@ -103,27 +102,49 @@ configuration file.
 #### Attributes
 
 ##### `configdir`
+
 ##### `configfile`
+
 ##### `keys`
+
 ##### `gid`
+
 ##### `group`
+
 ##### `homedir`
+
 ##### `uid`
+
 ##### `umask`
+
 ##### `user`
+
 ##### `log_why`
+
 ##### `package_name`
+
 ##### `service_ensure`
+
 ##### `service_enable`
+
 ##### `service_name`
+
 ##### `socket`
+
 ##### `subdomains`
+
 ##### `sysconfigfile`
+
 ##### `trusted_hosts`
+
 ##### `mode`
+
 ##### `canonicalization`
+
 ##### `removeoldsignatures`
+
 ##### `maximum_signed_bytes`
+
 ##### `trustanchorfile`
 
 ## Limitations
@@ -134,9 +155,13 @@ This module has only been tested on my Debian and Centos servers. I can not guar
 
 You are pleased to fork this module and adapt it for you needs. I am open to any Pull Request :-)
 
-## Release Notes/Contributors/Etc. 
+## Release Notes/Contributors/Etc
 
-### v0.2 - Compatible with Puppetfrom 4.8 to newer
+### v0.3 - Compatible with Puppet from 6.4 to newer
+
+* v0.3.0 Correct a bug about an optional parameter
+
+### v0.2 - Compatible with Puppet from 4.8 to 6.3
 
 * v0.2.9 Correct a bug about an optional parameter
 * v0.2.8 Add features from Pull Requests
