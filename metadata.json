@@ -1,7 +1,7 @@
 {
   "name": "lvicainne-opendkim",
   "version": "0.3.0",
-  "author": "lvicainne",
+  "author": "lvicainne,cruelsmith",
   "license": "Apache-2.0",
   "summary": "Manage an OpenDKIM configuration",
   "source": "https://github.com/lvicainne/puppet-opendkim",
