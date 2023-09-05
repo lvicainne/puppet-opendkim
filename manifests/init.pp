@@ -107,7 +107,7 @@ class opendkim (
   Stdlib::Absolutepath            $configfile           = '/etc/opendkim.conf',
   Stdlib::Absolutepath            $pidfile              = '/run/opendkim/opendkim.pid',
   Pattern[/\A[0-7]{3,4}\z/]       $rundir_mode          = '0755',
-  Optional[Stdlib::Absolutepath]  $sysconfigfile        = '/etc/sysconfig/opendkim', # lint:ignore:optional_default
+  Optional[Stdlib::Absolutepath]  $sysconfigfile        = undef,
   String[1]                       $package_name         = 'opendkim',
   String[1]                       $service_name         = 'opendkim',
   Stdlib::Ensure::Service         $service_ensure       = 'running',
