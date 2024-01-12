@@ -75,14 +75,14 @@ class opendkim::config {
     ensure  => directory,
     recurse => true,
     purge   => true,
-    owner   => 'root',
+    owner   => $opendkim::user,
     group   => $opendkim::group,
     mode    => '0640',
   }
 
   file { "${opendkim::configdir}/keys":
     ensure => directory,
-    owner  => 'root',
+    owner  => $opendkim::user,
     group  => $opendkim::group,
     mode   => '0640',
   }
@@ -97,7 +97,7 @@ class opendkim::config {
 
   file { $opendkim::configfile:
     ensure  => 'file',
-    owner   => 'root',
+    owner   => $opendkim::user,
     group   => $opendkim::group,
     mode    => '0640',
     content => epp("${module_name}/etc/opendkim.conf.epp", {
@@ -126,7 +126,7 @@ class opendkim::config {
 
   file { "${opendkim::configdir}/TrustedHosts":
     ensure  => file,
-    owner   => 'root',
+    owner   => $opendkim::user,
     group   => $opendkim::group,
     mode    => '0640',
     content => epp("${module_name}/etc/TrustedHosts.epp", {
@@ -161,7 +161,7 @@ class opendkim::config {
   } else {
     file { "${opendkim::configdir}/SigningTable":
       ensure  => 'file',
-      owner   => 'root',
+      owner   => $opendkim::user,
       group   => $opendkim::group,
       mode    => '0640',
       content => epp("${module_name}/etc/SigningTable.epp", {
@@ -171,7 +171,7 @@ class opendkim::config {
 
     file { "${opendkim::configdir}/KeyTable":
       ensure  => 'file',
-      owner   => 'root',
+      owner   => $opendkim::user,
       group   => $opendkim::group,
       mode    => '0640',
       content => epp("${module_name}/etc/KeyTable.epp", {
@@ -184,18 +184,18 @@ class opendkim::config {
       ensure_resource('file', "${opendkim::configdir}/keys/${key['domain']}", {
           ensure  => directory,
           recurse => true,
-          owner   => 'root',
+          owner   => $opendkim::user,
           group   => $opendkim::group,
-          mode    => '0710',
+          mode    => '0700',
       })
 
       if $opendkim::manage_private_keys == true {
         file { "${opendkim::configdir}/keys/${key['domain']}/${key['selector']}":
           ensure  => 'file',
           content => $key['privatekey'],
-          owner   => 'root',
+          owner   => $opendkim::user,
           group   => $opendkim::group,
-          mode    => '0640',
+          mode    => '0600',
         }
       }
 
@@ -208,9 +208,9 @@ class opendkim::config {
             'publickeyextended' => $key.get('publickeyextended'),
             'hash_algorithms'   => $key.get('hash_algorithms'),
         }),
-        owner   => 'root',
+        owner   => $opendkim::user,
         group   => $opendkim::group,
-        mode    => '0640',
+        mode    => '0600',
       }
     }
   }
