@@ -125,6 +125,7 @@ InternalHosts           refile:<%= $configdir %>/TrustedHosts
 # and the verifier.  From is oversigned by default in the Debian pacakge
 # because it is often the identity key used by reputation systems and thus
 # somewhat security sensitive.
+SignHeaders		From
 OversignHeaders         From
 
 SubDomains             <%= $subdomains ? { true => 'yes', false => 'no', default => $subdomains } %>
