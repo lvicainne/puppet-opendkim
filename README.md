@@ -34,8 +34,8 @@ Warning : this package will replace all your RSA keys ! Before using it, be sure
 A basic example is as follows:
 
 ```puppet
-  class { '::opendkim':
-    socket        => 'inet:8891@127.0.0.1',
+  class { 'opendkim':
+    socket        => 'inet:8891@[127.0.0.1]',
     trusted_hosts => ['::1','127.0.0.1','localhost'],
     keys          => [
         { 
@@ -53,13 +53,12 @@ A basic example is as follows:
 
 You can also use natively Hiera :
 
-
 ```puppet
-  include ::opendkim
+  include opendkim
 ```
 
 ```yaml
-opendkim::socket: 'inet:8891@127.0.0.1'
+opendkim::socket: 'inet:8891@[127.0.0.1]'
 opendkim::trusted_hosts:
     - '::1'
     - '127.0.0.1'
@@ -81,7 +80,6 @@ opendkim::keys:
 
 If you want to use OpenDKIM though a UNIX socket with postfix for example, 
 you should configure the socket like this :
-
 
 ```yaml
 opendkim::socket: 'local:/var/run/opendkim/opendkim.sock'
@@ -185,4 +183,3 @@ You are pleased to fork this module and adapt it for you needs. I am open to any
 * v0.0.3 Improve some documentation parts
 * v0.0.2 Improve some documentation parts
 * v0.0.1 First Running version
-
