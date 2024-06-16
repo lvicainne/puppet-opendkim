@@ -86,9 +86,13 @@
 # @param publickey
 #   The publickey used for signing in alldomain mode.
 # @param publickeyextended
+#   Deprecated: Just use publickey. The template will split the in chunks for the dns txt file.
+#
 #   The publickeyextended used for signing in alldomain mode.
 # @param privatekey
 #   The privatekey used for signing in alldomain mode.
+# @param key_algorithm
+#   The key_algorithm used for signing in alldomain mode.
 # @param hash_algorithms
 #   The hash_algorithms used for signing in alldomain mode.
 # @param autorestart
@@ -142,10 +146,19 @@ class opendkim (
   Optional[String[1]]             $publickey            = undef,
   Optional[String[1]]             $publickeyextended    = undef,
   Optional[String[1]]             $privatekey           = undef,
+  Optional[String[1]]             $key_algorithm        = undef,
   Optional[String[1]]             $hash_algorithms      = undef,
   Optional[Variant[Boolean,Enum['yes','no']]] $autorestart            = undef,
   Optional[Pattern[/\A[0-9]+\/[0-9]+[sSmMhHdD]\z/]] $autorestartrate  = undef,
 ) {
+  if $publickeyextended {
+    deprecation(
+      'opendkim::publickeyextended',
+      'The `publickeyextended` parameter is deprecated. Handover the fullength of the publickey only via `publickey` instead.',
+      false
+    )
+  }
+
   contain opendkim::install
   contain opendkim::user
   contain opendkim::config

@@ -1,0 +1,30 @@
+<%- | String[1] $selector,
+      String[1] $key_algorithm = 'rsa',
+      Optional[String[1]] $hash_algorithms = undef,
+      String[1] $publickey,
+      Optional[String[1]] $publickeyextended = undef,
+      String[1] $domain,
+      Integer[255] $chunk_size = 255,
+| -%>
+<%-
+  $_record = [
+    'v=DKIM1',
+    $hash_algorithms ? {
+      Undef   => '',
+      default => "h=${hash_algorithms}",
+    },
+    "k=${key_algorithm}",
+    $publickey =~ /\Ap=/ ? {
+      true    => "${publickey}${publickeyextended}",
+      default => "p=${publickey}${publickeyextended}",
+    },
+  ].filter |$entry| { !$entry.empty }.join('; ')
+  $_chunk_count = ($_record.length - 1) / $chunk_size
+  $_chunks = Integer[0, $_chunk_count].map |$i| {
+    $_record[$i * $chunk_size, $chunk_size]
+  }
+-%>
+<%= $selector -%>._domainkey      IN      TXT     (
+        <%- $_chunks.each |$i, $_chunk| { -%>
+         "<%= $_chunk %>"<% if $_chunk_count == $i { %> )  ; ----- DKIM key <%= $selector %> for <%= $domain %><% } %>
+        <%- } -%>
