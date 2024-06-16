@@ -150,11 +150,12 @@ class opendkim::config {
 
     file { "${opendkim::configdir}/keys/${opendkim::selector}.txt":
       ensure  => 'file',
-      content => epp("${module_name}/public-rsa-key.epp", {
+      content => epp("${module_name}/public-key.epp", {
           'selector'          => $opendkim::selector,
           'domain'            => 'all',
           'publickey'         => $opendkim::publickey,
           'publickeyextended' => pick_default($opendkim::publickeyextended, undef),
+          'key_algorithm'     => pick_default($opendkim::key_algorithm, undef),
           'hash_algorithms'   => pick_default($opendkim::hash_algorithms, undef),
       }),
       owner   => 'root',
@@ -205,12 +206,15 @@ class opendkim::config {
 
       file { "${opendkim::configdir}/keys/${key['domain']}/${key['selector']}.txt":
         ensure  => file,
-        content => epp("${module_name}/public-rsa-key.epp", {
-            'selector'          => $key['selector'],
-            'domain'            => $key['domain'],
-            'publickey'         => $key['publickey'],
-            'publickeyextended' => $key.get('publickeyextended'),
-            'hash_algorithms'   => $key.get('hash_algorithms'),
+        content => epp("${module_name}/public-key.epp", $key.filter |$key, $_| {
+            $key in [
+              'selector',
+              'domain',
+              'publickey',
+              'publickeyextended',
+              'key_algorithm',
+              'hash_algorithms',
+            ]
         }),
         owner   => $opendkim::user,
         group   => $opendkim::group,
