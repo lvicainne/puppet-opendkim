@@ -1,68 +1,76 @@
 {
-    "name": "lvicainne-opendkim",
-    "version": "0.3.0",
-    "author": "lvicainne",
-    "license": "Apache-2.0",
-    "summary": "Manage an OpenDKIM configuration",
-    "description": "Manage OpenDKIM installation and configuration with Puppet.",
-    "source": "https://github.com/lvicainne/puppet-opendkim",
-    "project_page": "http://github.com/lvicainne/puppet-opendkim",
-    "issues_url": "https://github.com/lvicainne/puppet-opendkim/issues",
-    "tags": ["dkim", "opendkim", "mail", "smtp"],
-    "operatingsystem_support": [
-        {
-            "operatingsystem": "RedHat",
-            "operatingsystemrelease": [
-                "5",
-                "6",
-                "7",
-                "8",
-                "9"
-            ]
-        },
-        {
-            "operatingsystem": "CentOS",
-            "operatingsystemrelease": [
-                "5",
-                "6",
-                "7",
-                "8",
-                "9"
-            ]
-        },
-        {
-            "operatingsystem": "Debian",
-            "operatingsystemrelease": [
-                "6",
-                "7",
-                "8",
-                "9"
-            ]
-        },
-        {
-            "operatingsystem": "Ubuntu",
-            "operatingsystemrelease": [
-                "16.04"
-            ]
-        },
-        {
-            "operatingsystem": "FreeBSD",
-            "operatingsystemrelease": [
-                "11",
-                "12"
-            ]
-        }
-    ],
-    "dependencies": [
-        {
-            "name": "puppetlabs/stdlib",
-            "version_requirement": ">= 4.13.0 < 9.0.0"
-        }
-    ],
-    "requirements": [
-        {
-            "name": "puppet",
-            "version_requirement": ">= 4.8.0 < 7.0.0"
-        }
-    ]
+  "name": "lvicainne-opendkim",
+  "version": "0.3.0",
+  "author": "lvicainne",
+  "summary": "Manage an OpenDKIM configuration",
+  "license": "Apache-2.0",
+  "source": "https://github.com/lvicainne/puppet-opendkim",
+  "project_page": "http://github.com/lvicainne/puppet-opendkim",
+  "issues_url": "https://github.com/lvicainne/puppet-opendkim/issues",
+  "dependencies": [
+    {
+      "name": "puppetlabs/stdlib",
+      "version_requirement": ">= 4.13.0 < 9.0.0"
+    }
+  ],
+  "operatingsystem_support": [
+    {
+      "operatingsystem": "RedHat",
+      "operatingsystemrelease": [
+        "5",
+        "6",
+        "7",
+        "8",
+        "9"
+      ]
+    },
+    {
+      "operatingsystem": "CentOS",
+      "operatingsystemrelease": [
+        "5",
+        "6",
+        "7",
+        "8",
+        "9"
+      ]
+    },
+    {
+      "operatingsystem": "Debian",
+      "operatingsystemrelease": [
+        "6",
+        "7",
+        "8",
+        "9"
+      ]
+    },
+    {
+      "operatingsystem": "Ubuntu",
+      "operatingsystemrelease": [
+        "16.04"
+      ]
+    },
+    {
+      "operatingsystem": "FreeBSD",
+      "operatingsystemrelease": [
+        "11",
+        "12"
+      ]
+    }
+  ],
+  "requirements": [
+    {
+      "name": "puppet",
+      "version_requirement": ">= 4.8.0 < 7.0.0"
+    }
+  ],
+  "description": "Manage OpenDKIM installation and configuration with Puppet.",
+  "tags": [
+    "dkim",
+    "opendkim",
+    "mail",
+    "smtp"
+  ],
+  "pdk-version": "3.2.0",
+  "template-url": "pdk-default#3.2.0",
+  "template-ref": "tags/3.2.0-0-gb257ef1"
 }
