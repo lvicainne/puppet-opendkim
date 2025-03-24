@@ -157,6 +157,15 @@ You are pleased to fork this module and adapt it for you needs. I am open to any
 
 ## Release Notes/Contributors/Etc
 
+### v0.4 - Compatible with Puppet from 6.24 up to, but not including, 8.0
+
+* v0.4.1  Fix version in metadata.json
+* v0.4.0  Add autorestart config
+          Lookup for OS Family facts in Hiera
+          Use var opendkim::user as the owner of files
+          Fix: Set default value for var opendkim::sysconfigfile
+          Set show_diff to false for all private key resources
+
 ### v0.3 - Compatible with Puppet from 6.4 to newer
 
 * v0.3.0 Correct a bug about an optional parameter
