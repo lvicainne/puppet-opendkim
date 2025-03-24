@@ -53,7 +53,6 @@ A basic example is as follows:
 
 You can also use natively Hiera :
 
-
 ```puppet
   include ::opendkim
 ```
@@ -81,7 +80,6 @@ opendkim::keys:
 
 If you want to use OpenDKIM though a UNIX socket with postfix for example, 
 you should configure the socket like this :
-
 
 ```yaml
 opendkim::socket: 'local:/var/run/opendkim/opendkim.sock'
@@ -159,6 +157,9 @@ You are pleased to fork this module and adapt it for you needs. I am open to any
 
 ### v0.4 - Compatible with Puppet from 6.24 up to, but not including, 8.0
 
+* v0.4.2  Add PDK dependancies
+          Add SignHeaders From
+          Chunking publickey in 255 char blocks for dns txt
 * v0.4.1  Fix version in metadata.json
 * v0.4.0  Add autorestart config
           Lookup for OS Family facts in Hiera
@@ -194,4 +195,3 @@ You are pleased to fork this module and adapt it for you needs. I am open to any
 * v0.0.3 Improve some documentation parts
 * v0.0.2 Improve some documentation parts
 * v0.0.1 First Running version
-
