@@ -34,19 +34,19 @@ Warning : this package will replace all your RSA keys ! Before using it, be sure
 A basic example is as follows:
 
 ```puppet
-  class { '::opendkim':
-    socket        => 'inet:8891@127.0.0.1',
-    trusted_hosts => ['::1','127.0.0.1','localhost'],
-    keys          => [
-        { 
-            domain         => 'mydomain.com',
-            selector       => 'default',
-            publickey      => 'p=yourPublicKey',
-            privatekey     => 'Your Private Key',
-            signingdomains => ['*@mydomain.com', '*@subdomain.mydomain.com'],
-        }
-    ]
-  }
+class { '::opendkim':
+  socket        => 'inet:8891@127.0.0.1',
+  trusted_hosts => ['::1','127.0.0.1','localhost'],
+  keys          => [
+      { 
+          domain         => 'mydomain.com',
+          selector       => 'default',
+          publickey      => 'p=yourPublicKey',
+          privatekey     => 'Your Private Key',
+          signingdomains => ['*@mydomain.com', '*@subdomain.mydomain.com'],
+      }
+  ]
+}
 ```
 
 ## Usage
@@ -54,7 +54,7 @@ A basic example is as follows:
 You can also use natively Hiera :
 
 ```puppet
-  include ::opendkim
+include ::opendkim
 ```
 
 ```yaml
@@ -152,46 +152,3 @@ This module has only been tested on my Debian and Centos servers. I can not guar
 ## Development
 
 You are pleased to fork this module and adapt it for you needs. I am open to any Pull Request :-)
-
-## Release Notes/Contributors/Etc
-
-### v0.4 - Compatible with Puppet from 6.24 up to, but not including, 8.0
-
-* v0.4.2  Add PDK dependancies
-          Add SignHeaders From
-          Chunking publickey in 255 char blocks for dns txt
-* v0.4.1  Fix version in metadata.json
-* v0.4.0  Add autorestart config
-          Lookup for OS Family facts in Hiera
-          Use var opendkim::user as the owner of files
-          Fix: Set default value for var opendkim::sysconfigfile
-          Set show_diff to false for all private key resources
-
-### v0.3 - Compatible with Puppet from 6.4 to newer
-
-* v0.3.0 Correct a bug about an optional parameter
-
-### v0.2 - Compatible with Puppet from 4.8 to 6.3
-
-* v0.2.9 Correct a bug about an optional parameter
-* v0.2.8 Add features from Pull Requests
-* v0.2.7 Add parameter maximum_signed_bytes
-* v0.2.6 Add parameters: mode, canonicalization, removeoldsignatures
-* v0.2.5 Make uid and gid not required any more to be defined
-* v0.2.4 Correction of the default directory for CentOs : from /etc/dkim to /etc/opendkim 
-* v0.2.3 Minor changes and corrections about empty values
-
-### v0.1 - Compatible with Puppet up to 4.6
-
-* v0.1.2 Virtual version (same as v0.1.0 but with bugfix about requirements and puppet version required)
-* v0.1.1 Use newer implementations of Puppet (v4.8 and newer). 
-* v0.1.0 Replace deprecated stdlib functions with puppet data types
-* v0.0.9 Correct some dependencies
-* v0.0.8 Closes #1 (SystemD with inline comments)
-* v0.0.7 Rename repository
-* v0.0.6 Support Umask variabilization in order to use UNIX sockets
-* v0.0.5 Add the homedir parameter
-* v0.0.4 Ensure the pidfile directory exists
-* v0.0.3 Improve some documentation parts
-* v0.0.2 Improve some documentation parts
-* v0.0.1 First Running version
