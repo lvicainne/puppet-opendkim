@@ -1,6 +1,6 @@
 {
   "name": "lvicainne-opendkim",
-  "version": "0.4.3",
+  "version": "0.4.4",
   "author": "lvicainne,cruelsmith",
   "summary": "Manage an OpenDKIM configuration",
   "license": "Apache-2.0",
