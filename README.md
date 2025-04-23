@@ -86,65 +86,6 @@ opendkim::socket: 'local:/var/run/opendkim/opendkim.sock'
 opendkim::umask: '0111'
 ```
 
-## Reference
-
-### Public Classes
-
-* [opendkim](#class-opendkim)
-
-### Class: opendkim
-
-A class for installing the OpenDKIM package and manipulate settings in the
-configuration file.
-
-#### Attributes
-
-##### `configdir`
-
-##### `configfile`
-
-##### `keys`
-
-##### `gid`
-
-##### `group`
-
-##### `homedir`
-
-##### `uid`
-
-##### `umask`
-
-##### `user`
-
-##### `log_why`
-
-##### `package_name`
-
-##### `service_ensure`
-
-##### `service_enable`
-
-##### `service_name`
-
-##### `socket`
-
-##### `subdomains`
-
-##### `sysconfigfile`
-
-##### `trusted_hosts`
-
-##### `mode`
-
-##### `canonicalization`
-
-##### `removeoldsignatures`
-
-##### `maximum_signed_bytes`
-
-##### `trustanchorfile`
-
 ## Limitations
 
 This module has only been tested on my Debian and Centos servers. I can not guarantee for any other Operating System
