@@ -121,6 +121,8 @@ class opendkim::config {
         'signaturealgorithm'   => $opendkim::signaturealgorithm,
         'minimumkeybits'       => $opendkim::minimumkeybits,
         'additional_options'   => $opendkim::additional_options,
+        'signheaders'          => $opendkim::signheaders,
+        'oversignheaders'      => $opendkim::oversignheaders,
         'autorestart'          => $opendkim::autorestart,
         'autorestartrate'      => $opendkim::autorestartrate,
     }),

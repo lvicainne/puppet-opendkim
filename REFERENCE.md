@@ -66,6 +66,8 @@ The following parameters are available in the `opendkim` class:
 * [`signaturealgorithm`](#-opendkim--signaturealgorithm)
 * [`minimumkeybits`](#-opendkim--minimumkeybits)
 * [`additional_options`](#-opendkim--additional_options)
+* [`signheaders`](#-opendkim--signheaders)
+* [`oversignheaders`](#-opendkim--oversignheaders)
 * [`trusted_hosts`](#-opendkim--trusted_hosts)
 * [`manage_private_keys`](#-opendkim--manage_private_keys)
 * [`keys`](#-opendkim--keys)
@@ -333,6 +335,26 @@ Data type: `Hash[String,Variant[Array[String],String,Integer,Boolean]]`
 These options will be also written into the opendkim config file
 
 Default value: `{}`
+
+##### <a name="-opendkim--signheaders"></a>`signheaders`
+
+Data type: `Array[String[1]]`
+
+Specifies the set of header fields that should be included when generating signatures. If the list omits any header field that
+is mandated by the DKIM specification, those fields are implicitly added.
+By using empty array, Opendkim defaults sign with fields listed in the DKIM specification as "SHOULD" be signed (RFC6376, Section 5.4).
+
+Default value: `['From']`
+
+##### <a name="-opendkim--oversignheaders"></a>`oversignheaders`
+
+Data type: `Array[String[1]]`
+
+Specifies a set of header fields that should be included in all signature header lists (the "h=" tag)
+The purpose of this, and especially of listing an absent header field, is to prevent the addition of important fields between the signer and the verifier.
+Note that listing a field name here and not listing it in the SignHeaders list is likely to generate invalid signatures.
+
+Default value: `['From']`
 
 ##### <a name="-opendkim--trusted_hosts"></a>`trusted_hosts`
 

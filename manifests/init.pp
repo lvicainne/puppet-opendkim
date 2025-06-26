@@ -73,6 +73,14 @@
 #   validation, will me marked as invalid.
 # @param additional_options
 #   These options will be also written into the opendkim config file
+# @param signheaders
+#   Specifies the set of header fields that should be included when generating signatures. If the list omits any header field that
+#   is mandated by the DKIM specification, those fields are implicitly added.
+#   By using empty array, Opendkim defaults sign with fields listed in the DKIM specification as "SHOULD" be signed (RFC6376, Section 5.4).
+# @param oversignheaders
+#   Specifies a set of header fields that should be included in all signature header lists (the "h=" tag)
+#   The purpose of this, and especially of listing an absent header field, is to prevent the addition of important fields between the signer and the verifier.
+#   Note that listing a field name here and not listing it in the SignHeaders list is likely to generate invalid signatures.
 #
 # @param trusted_hosts
 #   Hosts that may send mail through the server as one of the signing domains without credentials and whose mail should be signed rather
@@ -140,6 +148,8 @@ class opendkim (
   Optional[String[1]]             $signaturealgorithm   = undef,
   Optional[Integer[1]]            $minimumkeybits       = undef,
   Hash[String,Variant[Array[String],String,Integer,Boolean]]             $additional_options   = {},
+  Array[String[1]]                 $signheaders         = ['From'],
+  Array[String[1]]                 $oversignheaders     = ['From'],
 
   Array[String,1]                 $trusted_hosts        = ['::1', '127.0.0.1', 'localhost'],
   Boolean                         $manage_private_keys  = true,
