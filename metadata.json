@@ -1,11 +1,13 @@
 {
   "name": "lvicainne-opendkim",
-  "version": "0.4.4",
+  "version": "0.4.5",
   "author": "lvicainne,cruelsmith",
   "summary": "Manage an OpenDKIM configuration",
   "license": "Apache-2.0",
   "source": "https://github.com/lvicainne/puppet-opendkim",
-  "project_page": "http://github.com/lvicainne/puppet-opendkim",
+  "project_page": "https://github.com/lvicainne/puppet-opendkim",
+  "documentation_url": "https://github.com/lvicainne/puppet-opendkim/blob/main/REFERENCE.md",
+  "changelog_url": "https://github.com/lvicainne/puppet-opendkim/blob/main/CHANGELOG.md",
   "issues_url": "https://github.com/lvicainne/puppet-opendkim/issues",
   "dependencies": [
     {
@@ -19,7 +21,8 @@
       "operatingsystemrelease": [
         "7",
         "8",
-        "9"
+        "9",
+        "10"
       ]
     },
     {
@@ -31,11 +34,21 @@
       ]
     },
     {
+      "operatingsystem": "Rocky",
+      "operatingsystemrelease": [
+        "8",
+        "9",
+        "10"
+      ]
+    },
+    {
       "operatingsystem": "Debian",
       "operatingsystemrelease": [
         "9",
         "10",
-        "11"
+        "11",
+        "12",
+        "13"
       ]
     },
     {
@@ -43,7 +56,12 @@
       "operatingsystemrelease": [
         "20.04",
         "22.04",
-        "24.04"
+        "24.04",
+        "24.10",
+        "25.04",
+        "25.10",
+        "26.04",
+        "26.10"
       ]
     },
     {
