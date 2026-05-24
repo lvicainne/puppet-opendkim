@@ -23,7 +23,7 @@ group :development do
   gem "deep_merge", '~> 1.2.2',                  require: false
   gem "voxpupuli-puppet-lint-plugins", '~> 5.0', require: false
   gem "facterdb", '~> 2.1',                      require: false
-  gem "metadata-json-lint", '~> 4.0',            require: false
+  gem "metadata-json-lint", '~> 5.0',            require: false
   gem "rspec-puppet-facts", '~> 4.0',            require: false
   gem "dependency_checker", '~> 1.0.0',          require: false
   gem "parallel_tests", '5.7.0',              require: false
