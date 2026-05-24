@@ -57,7 +57,7 @@ class opendkim::config {
     file { $_piddir:
       ensure => directory,
       owner  => $opendkim::user,
-      group  => $opendkim::group,
+      group  => $opendkim::rundir_group,
       mode   => $opendkim::rundir_mode,
     }
   }

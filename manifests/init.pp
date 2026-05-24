@@ -25,6 +25,9 @@
 #   Path of the process id file of the service.
 # @param rundir_mode
 #   Run directory permission of the service.
+# @param rundir_group
+#   Group of the run directory. Defaults to `$group`. This is useful e.g. to
+#   expose the milter socket to the MTA.
 # @param sysconfigfile
 #   Path of the sysconfig file.
 # @param package_name
@@ -115,6 +118,7 @@ class opendkim (
   Stdlib::Absolutepath            $configfile           = '/etc/opendkim.conf',
   Stdlib::Absolutepath            $pidfile              = '/run/opendkim/opendkim.pid',
   Pattern[/\A[0-7]{3,4}\z/]       $rundir_mode          = '0755',
+  String[1]                       $rundir_group         = $group,
   Optional[Stdlib::Absolutepath]  $sysconfigfile        = undef,
   String[1]                       $package_name         = 'opendkim',
   String[1]                       $service_name         = 'opendkim',
