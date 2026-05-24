@@ -1,51 +1,63 @@
+# Git and editor files
 .git/
 .*.sw[op]
+.DS_Store
+.project
+.envrc
+
+# Build and dependency artifacts
+/.bundle/
+/.vendor/
+/vendor/
+/pkg/
+/bin/
+
+# IDE and environment
+/.idea/
+/.vagrant/
+/.devcontainer/
+
+# Temporary and test artifacts
+/coverage/
+/doc/
+/junit/
+/log/
+/tmp/
+/convert_report.txt
+/update_report.txt
+
+# Ruby/Yard documentation
 .metadata
 .yardoc
 .yardwarns
 *.iml
-/.bundle/
-/.idea/
-/.vagrant/
-/coverage/
-/bin/
-/doc/
-/Gemfile.local
-/Gemfile.lock
-/junit/
-/log/
-/pkg/
-/spec/fixtures/manifests/
-/spec/fixtures/modules/*
-/tmp/
-/vendor/
-/.vendor/
-/convert_report.txt
-/update_report.txt
-.DS_Store
-.project
-.envrc
-/inventory.yaml
-/spec/fixtures/litmus_inventory.yaml
+
+# PDK and Puppet specific
 .resource_types
 .modules
 .task_cache.json
 .plan_cache.json
 .rerun.json
 bolt-debug.log
-/.fixtures.yml
-/Gemfile
-/.gitattributes
-/.github/
-/.gitignore
-/.pdkignore
-/.puppet-lint.rc
-/Rakefile
-/rakelib/
-/.rspec
-/..yml
-/.yardopts
-/spec/
-/.vscode/
-/.sync.yml
-/.devcontainer/
+
+# Sensitive/local files
+/Gemfile.local
+/Gemfile.lock
+/inventory.yaml
+/spec/fixtures/manifests/
+/spec/fixtures/modules/*
+/spec/fixtures/litmus_inventory.yaml
+
+# IMPORTANT: These files are part of the module and should NOT be ignored
+# /.fixtures.yml       # Test fixtures configuration - TRACKED
+# /Gemfile            # Dependencies - TRACKED
+# /.gitattributes     # Git configuration - TRACKED
+# /.github/           # GitHub workflows - TRACKED
+# /.gitignore         # Git ignore rules - TRACKED
+# /.pdkignore         # This file - TRACKED
+# /.puppet-lint.rc    # Lint configuration - TRACKED
+# /Rakefile           # Build tasks - TRACKED
+# /rakelib/           # Rake libraries - TRACKED
+# /.rspec             # RSpec configuration - TRACKED
+# /spec/              # Test directory - TRACKED
+# /.vscode/           # VS Code settings - TRACKED

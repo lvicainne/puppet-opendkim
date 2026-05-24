@@ -1,7 +1,7 @@
 # OpenDKIM
 
 [![Puppet Forge](http://img.shields.io/puppetforge/v/lvicainne/opendkim.svg)](https://forge.puppetlabs.com/lvicainne/opendkim)
-[![Build Status](https://travis-ci.org/lvicainne/puppet-opendkim.svg?branch=master)](https://travis-ci.org/lvicainne/puppet-opendkim)
+[![Puppet Lint](https://github.com/lvicainne/puppet-opendkim/actions/workflows/puppet-lint.yml/badge.svg)](https://github.com/lvicainne/puppet-opendkim/actions/workflows/puppet-lint.yml)
 
 ## Table of Contents
 
