@@ -7,12 +7,6 @@
   "source": "https://github.com/lvicainne/puppet-opendkim",
   "project_page": "http://github.com/lvicainne/puppet-opendkim",
   "issues_url": "https://github.com/lvicainne/puppet-opendkim/issues",
-  "dependencies": [
-    {
-      "name": "puppetlabs/stdlib",
-      "version_requirement": ">= 4.13.0 < 10.0.0"
-    }
-  ],
   "operatingsystem_support": [
     {
       "operatingsystem": "RedHat",
@@ -52,6 +46,16 @@
         "12",
         "13"
       ]
+    }
+  ],
+  "dependencies": [
+    {
+      "name": "puppetlabs/stdlib",
+      "version_requirement": ">= 4.13.0 < 10.0.0"
+    },
+    {
+      "name": "puppet/systemd",
+      "version_requirement": ">= 6.1.0 < 8.0.0"
     }
   ],
   "requirements": [

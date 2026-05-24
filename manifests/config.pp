@@ -37,17 +37,13 @@ class opendkim::config {
 
   $_piddir = dirname($opendkim::pidfile)
   if fact('os.family') == 'RedHat' {
-    file_line { "${opendkim::service_name}.service RuntimeDirectory":
-      path  => "/usr/lib/systemd/system/${opendkim::service_name}.service",
-      line  => "RuntimeDirectory=${basename($_piddir)}",
-      match => '^RuntimeDirectory=',
-      after => '^Restart=',
-    }
-    -> file_line { "${opendkim::service_name}.service RuntimeDirectoryMode":
-      path  => "/usr/lib/systemd/system/${opendkim::service_name}.service",
-      line  => "RuntimeDirectoryMode=${opendkim::rundir_mode}",
-      match => '^RuntimeDirectoryMode=',
-      after => '^RuntimeDirectory=',
+    systemd::manage_dropin { "${opendkim::service_name}.service.d/RuntimeDirectory.conf":
+      unit          => "${opendkim::service_name}.service",
+      filename      => 'RuntimeDirectory.conf',
+      service_entry => {
+        'RuntimeDirectory'     => basename($_piddir),
+        'RuntimeDirectoryMode' => $opendkim::rundir_mode,
+      },
     }
 
     file { '/etc/tmpfiles.d/opendkim.conf':
