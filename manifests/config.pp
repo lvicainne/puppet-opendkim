@@ -11,10 +11,10 @@ class opendkim::config {
       group   => 'root',
       mode    => '0640',
       content => epp("${module_name}/sysconfig/opendkim.epp", {
-          'socket'     => $opendkim::socket,
-          'configfile' => $opendkim::configfile,
-          'configdir'  => $opendkim::configdir,
-          'pidfile'    => $opendkim::pidfile,
+        'socket'     => $opendkim::socket,
+        'configfile' => $opendkim::configfile,
+        'configdir'  => $opendkim::configdir,
+        'pidfile'    => $opendkim::pidfile,
       }),
     }
   }
@@ -23,31 +23,27 @@ class opendkim::config {
     file_line {
       default:
         path => '/etc/rc.conf',
-        ;
+      ;
       'milteropendkim_uid':
         line  => "milteropendkim_uid=\"${opendkim::user}\"",
         match => '^milteropendkim_uid=',
-        ;
+      ;
       'milteropendkim_gid':
         line  => "milteropendkim_gid=\"${opendkim::group}\"",
         match => '^milteropendkim_gid=',
-        ;
+      ;
     }
   }
 
   $_piddir = dirname($opendkim::pidfile)
   if fact('os.family') == 'RedHat' {
-    file_line { "${opendkim::service_name}.service RuntimeDirectory":
-      path  => "/usr/lib/systemd/system/${opendkim::service_name}.service",
-      line  => "RuntimeDirectory=${basename($_piddir)}",
-      match => '^RuntimeDirectory=',
-      after => '^Restart=',
-    }
-    -> file_line { "${opendkim::service_name}.service RuntimeDirectoryMode":
-      path  => "/usr/lib/systemd/system/${opendkim::service_name}.service",
-      line  => "RuntimeDirectoryMode=${opendkim::rundir_mode}",
-      match => '^RuntimeDirectoryMode=',
-      after => '^RuntimeDirectory=',
+    systemd::manage_dropin { "${opendkim::service_name}.service.d/RuntimeDirectory.conf":
+      unit          => "${opendkim::service_name}.service",
+      filename      => 'RuntimeDirectory.conf',
+      service_entry => {
+        'RuntimeDirectory'     => basename($_piddir),
+        'RuntimeDirectoryMode' => $opendkim::rundir_mode,
+      },
     }
 
     file { '/etc/tmpfiles.d/opendkim.conf':
@@ -57,7 +53,7 @@ class opendkim::config {
     file { $_piddir:
       ensure => directory,
       owner  => $opendkim::user,
-      group  => $opendkim::group,
+      group  => $opendkim::rundir_group,
       mode   => $opendkim::rundir_mode,
     }
   }
@@ -101,28 +97,30 @@ class opendkim::config {
     group   => $opendkim::group,
     mode    => '0640',
     content => epp("${module_name}/etc/opendkim.conf.epp", {
-        'pidfile'              => $opendkim::pidfile,
-        'mode'                 => $opendkim::mode,
-        'log_why'              => $opendkim::log_why,
-        'user'                 => $opendkim::user,
-        'group'                => $opendkim::group,
-        'socket'               => $opendkim::socket,
-        'umask'                => $opendkim::umask,
-        'canonicalization'     => $opendkim::canonicalization,
-        'alldomain'            => $opendkim::alldomain,
-        'selector'             => $opendkim::selector,
-        'configdir'            => $opendkim::configdir,
-        'subdomains'           => $opendkim::subdomains,
-        'nameservers'          => $opendkim::nameservers,
-        'removeoldsignatures'  => $opendkim::removeoldsignatures,
-        'maximum_signed_bytes' => $opendkim::maximum_signed_bytes,
-        'trustanchorfile'      => $opendkim::trustanchorfile,
-        'senderheaders'        => $opendkim::senderheaders,
-        'signaturealgorithm'   => $opendkim::signaturealgorithm,
-        'minimumkeybits'       => $opendkim::minimumkeybits,
-        'additional_options'   => $opendkim::additional_options,
-        'autorestart'          => $opendkim::autorestart,
-        'autorestartrate'      => $opendkim::autorestartrate,
+      'pidfile'              => $opendkim::pidfile,
+      'mode'                 => $opendkim::mode,
+      'log_why'              => $opendkim::log_why,
+      'user'                 => $opendkim::user,
+      'group'                => $opendkim::group,
+      'socket'               => $opendkim::socket,
+      'umask'                => $opendkim::umask,
+      'canonicalization'     => $opendkim::canonicalization,
+      'alldomain'            => $opendkim::alldomain,
+      'selector'             => $opendkim::selector,
+      'configdir'            => $opendkim::configdir,
+      'subdomains'           => $opendkim::subdomains,
+      'nameservers'          => $opendkim::nameservers,
+      'removeoldsignatures'  => $opendkim::removeoldsignatures,
+      'maximum_signed_bytes' => $opendkim::maximum_signed_bytes,
+      'trustanchorfile'      => $opendkim::trustanchorfile,
+      'senderheaders'        => $opendkim::senderheaders,
+      'signaturealgorithm'   => $opendkim::signaturealgorithm,
+      'minimumkeybits'       => $opendkim::minimumkeybits,
+      'additional_options'   => $opendkim::additional_options,
+      'signheaders'          => $opendkim::signheaders,
+      'oversignheaders'      => $opendkim::oversignheaders,
+      'autorestart'          => $opendkim::autorestart,
+      'autorestartrate'      => $opendkim::autorestartrate,
     }),
   }
 
@@ -132,7 +130,7 @@ class opendkim::config {
     group   => $opendkim::group,
     mode    => '0640',
     content => epp("${module_name}/etc/TrustedHosts.epp", {
-        'trusted_hosts' => $opendkim::trusted_hosts,
+      'trusted_hosts' => $opendkim::trusted_hosts,
     }),
   }
 
@@ -150,12 +148,13 @@ class opendkim::config {
 
     file { "${opendkim::configdir}/keys/${opendkim::selector}.txt":
       ensure  => 'file',
-      content => epp("${module_name}/public-rsa-key.epp", {
-          'selector'          => $opendkim::selector,
-          'domain'            => 'all',
-          'publickey'         => $opendkim::publickey,
-          'publickeyextended' => pick_default($opendkim::publickeyextended, undef),
-          'hash_algorithms'   => pick_default($opendkim::hash_algorithms, undef),
+      content => epp("${module_name}/public-key.epp", {
+        'selector'          => $opendkim::selector,
+        'domain'            => 'all',
+        'publickey'         => $opendkim::publickey,
+        'publickeyextended' => pick_default($opendkim::publickeyextended, undef),
+        'key_algorithm'     => pick_default($opendkim::key_algorithm, undef),
+        'hash_algorithms'   => pick_default($opendkim::hash_algorithms, undef),
       }),
       owner   => 'root',
       group   => $opendkim::group,
@@ -168,7 +167,7 @@ class opendkim::config {
       group   => $opendkim::group,
       mode    => '0640',
       content => epp("${module_name}/etc/SigningTable.epp", {
-          'keys' => $opendkim::keys,
+        'keys' => $opendkim::keys,
       }),
     }
 
@@ -178,18 +177,18 @@ class opendkim::config {
       group   => $opendkim::group,
       mode    => '0640',
       content => epp("${module_name}/etc/KeyTable.epp", {
-          'keys'      => $opendkim::keys,
-          'configdir' => $opendkim::configdir,
+        'keys'      => $opendkim::keys,
+        'configdir' => $opendkim::configdir,
       }),
     }
 
     $opendkim::keys.each |Hash $key| {
       ensure_resource('file', "${opendkim::configdir}/keys/${key['domain']}", {
-          ensure  => directory,
-          recurse => true,
-          owner   => $opendkim::user,
-          group   => $opendkim::group,
-          mode    => '0700',
+        ensure  => directory,
+        recurse => true,
+        owner   => $opendkim::user,
+        group   => $opendkim::group,
+        mode    => '0700',
       })
 
       if $opendkim::manage_private_keys == true {
@@ -205,12 +204,15 @@ class opendkim::config {
 
       file { "${opendkim::configdir}/keys/${key['domain']}/${key['selector']}.txt":
         ensure  => file,
-        content => epp("${module_name}/public-rsa-key.epp", {
-            'selector'          => $key['selector'],
-            'domain'            => $key['domain'],
-            'publickey'         => $key['publickey'],
-            'publickeyextended' => $key.get('publickeyextended'),
-            'hash_algorithms'   => $key.get('hash_algorithms'),
+        content => epp("${module_name}/public-key.epp", $key.filter |$key, $_| {
+          $key in [
+            'selector',
+            'domain',
+            'publickey',
+            'publickeyextended',
+            'key_algorithm',
+            'hash_algorithms',
+          ]
         }),
         owner   => $opendkim::user,
         group   => $opendkim::group,

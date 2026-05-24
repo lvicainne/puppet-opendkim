@@ -25,6 +25,9 @@
 #   Path of the process id file of the service.
 # @param rundir_mode
 #   Run directory permission of the service.
+# @param rundir_group
+#   Group of the run directory. Defaults to `$group`. This is useful e.g. to
+#   expose the milter socket to the MTA.
 # @param sysconfigfile
 #   Path of the sysconfig file.
 # @param package_name
@@ -70,6 +73,14 @@
 #   validation, will me marked as invalid.
 # @param additional_options
 #   These options will be also written into the opendkim config file
+# @param signheaders
+#   Specifies the set of header fields that should be included when generating signatures. If the list omits any header field that
+#   is mandated by the DKIM specification, those fields are implicitly added.
+#   By using empty array, Opendkim defaults sign with fields listed in the DKIM specification as "SHOULD" be signed (RFC6376, Section 5.4).
+# @param oversignheaders
+#   Specifies a set of header fields that should be included in all signature header lists (the "h=" tag)
+#   The purpose of this, and especially of listing an absent header field, is to prevent the addition of important fields between the signer and the verifier.
+#   Note that listing a field name here and not listing it in the SignHeaders list is likely to generate invalid signatures.
 #
 # @param trusted_hosts
 #   Hosts that may send mail through the server as one of the signing domains without credentials and whose mail should be signed rather
@@ -86,9 +97,13 @@
 # @param publickey
 #   The publickey used for signing in alldomain mode.
 # @param publickeyextended
+#   Deprecated: Just use publickey. The template will split the in chunks for the dns txt file.
+#
 #   The publickeyextended used for signing in alldomain mode.
 # @param privatekey
 #   The privatekey used for signing in alldomain mode.
+# @param key_algorithm
+#   The key_algorithm used for signing in alldomain mode.
 # @param hash_algorithms
 #   The hash_algorithms used for signing in alldomain mode.
 # @param autorestart
@@ -111,6 +126,7 @@ class opendkim (
   Stdlib::Absolutepath            $configfile           = '/etc/opendkim.conf',
   Stdlib::Absolutepath            $pidfile              = '/run/opendkim/opendkim.pid',
   Pattern[/\A[0-7]{3,4}\z/]       $rundir_mode          = '0755',
+  String[1]                       $rundir_group         = $group,
   Optional[Stdlib::Absolutepath]  $sysconfigfile        = undef,
   String[1]                       $package_name         = 'opendkim',
   String[1]                       $service_name         = 'opendkim',
@@ -132,6 +148,8 @@ class opendkim (
   Optional[String[1]]             $signaturealgorithm   = undef,
   Optional[Integer[1]]            $minimumkeybits       = undef,
   Hash[String,Variant[Array[String],String,Integer,Boolean]]             $additional_options   = {},
+  Array[String[1]]                 $signheaders         = ['From'],
+  Array[String[1]]                 $oversignheaders     = ['From'],
 
   Array[String,1]                 $trusted_hosts        = ['::1', '127.0.0.1', 'localhost'],
   Boolean                         $manage_private_keys  = true,
@@ -142,17 +160,26 @@ class opendkim (
   Optional[String[1]]             $publickey            = undef,
   Optional[String[1]]             $publickeyextended    = undef,
   Optional[String[1]]             $privatekey           = undef,
+  Optional[String[1]]             $key_algorithm        = undef,
   Optional[String[1]]             $hash_algorithms      = undef,
   Optional[Variant[Boolean,Enum['yes','no']]] $autorestart            = undef,
   Optional[Pattern[/\A[0-9]+\/[0-9]+[sSmMhHdD]\z/]] $autorestartrate  = undef,
 ) {
+  if $publickeyextended {
+    deprecation(
+      'opendkim::publickeyextended',
+      'The `publickeyextended` parameter is deprecated. Handover the fullength of the publickey only via `publickey` instead.',
+      false
+    )
+  }
+
   contain opendkim::install
   contain opendkim::user
   contain opendkim::config
   contain opendkim::service
 
-  Class['opendkim::install']
-  -> Class['opendkim::user']
+  Class['opendkim::user']
+  -> Class['opendkim::install']
   -> Class['opendkim::config']
   ~> Class['opendkim::service']
 }
