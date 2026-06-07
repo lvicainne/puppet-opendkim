@@ -32,7 +32,7 @@ group :development do
   gem "puppet-debugger", '~> 1.0',               require: false
   gem "rubocop", '~> 1.87.0',                    require: false
   gem "rubocop-performance", '1.26.1',         require: false
-  gem "rubocop-rspec", '3.9.0',               require: false
+  gem "rubocop-rspec", '3.10.2',               require: false
   gem "rb-readline", '= 0.5.5',                  require: false, platforms: [:mswin, :mingw, :x64_mingw]
   gem "rexml", '>= 3.0.0', '< 3.4.5',            require: false
 end
