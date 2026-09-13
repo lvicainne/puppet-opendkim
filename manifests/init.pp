@@ -165,6 +165,7 @@ class opendkim (
   Optional[Variant[Boolean,Enum['yes','no']]] $autorestart            = undef,
   Optional[Pattern[/\A[0-9]+\/[0-9]+[sSmMhHdD]\z/]] $autorestartrate  = undef,
 ) {
+
   if $publickeyextended {
     deprecation(
       'opendkim::publickeyextended',
@@ -173,8 +174,8 @@ class opendkim (
     )
   }
 
-  contain opendkim::install
   contain opendkim::user
+  contain opendkim::install
   contain opendkim::config
   contain opendkim::service
 
