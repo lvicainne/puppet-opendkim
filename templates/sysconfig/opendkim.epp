@@ -24,7 +24,7 @@
 #SOCKET="inet:8891@localhost"
 
 # listen on 192.0.2.1 on port 12345
-#SOCKET="inet:12345@192.0.2.1"
+#SOCKET="inet:12345@[192.0.2.1]"
 
 SOCKET="<%= $socket %>"
 

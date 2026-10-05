@@ -35,7 +35,7 @@ A basic example is as follows:
 
 ```puppet
 class { '::opendkim':
-  socket        => 'inet:8891@127.0.0.1',
+  socket        => 'inet:8891@[127.0.0.1]',
   trusted_hosts => ['::1','127.0.0.1','localhost'],
   keys          => [
       { 
@@ -58,7 +58,7 @@ include ::opendkim
 ```
 
 ```yaml
-opendkim::socket: 'inet:8891@127.0.0.1'
+opendkim::socket: 'inet:8891@[127.0.0.1]'
 opendkim::trusted_hosts:
     - '::1'
     - '127.0.0.1'
